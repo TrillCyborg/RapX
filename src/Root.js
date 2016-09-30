@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Provider } from 'react-redux';
+import { AccessToken } from 'react-native-fbsdk';
 import firebase from 'firebase';
 import Store from './store/Store';
+import FacebookLoginButton from './components/FacebookLoginButton';
+import { setFbAccessToken, toggleLoggedIn } from './actions/User';
+
 
 class Root extends Component {
   componentWillMount() {
@@ -13,6 +17,14 @@ class Root extends Component {
       storageBucket: 'rapx-4dfa8.appspot.com',
       messagingSenderId: '683961390118',
     });
+    AccessToken.getCurrentAccessToken()
+      .then((data) => {
+        if (data) {
+          Store.dispatch(setFbAccessToken(data.accessToken.toString()));
+          Store.dispatch(toggleLoggedIn());
+        }
+      }
+    );
   }
 
   render() {
@@ -30,6 +42,7 @@ class Root extends Component {
             Press Cmd+R to reload,{'\n'}
             Cmd+D or shake for dev menu
           </Text>
+          <FacebookLoginButton />
         </View>
       </Provider>
     );
