@@ -29,7 +29,7 @@ function checkLoginState(accessToken) {
           // // ...
         }).then(() => {
           console.log('CURRENT USER', firebase.auth().currentUser);
-          Actions.main({ type: 'reset' });
+          Actions.main();
         });
       } else {
         // User is already signed-in Firebase with the correct user.

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Router, Scene } from 'react-native-router-flux';
-import TabIcon from './components/TabIcon';
+import { FeedIcon, LiveIcon, BattleIcon, ActivityIcon, ProfileIcon } from './components/TabIcons';
 import Modal from './components/Modal';
 
 import Login from './components/Login';
@@ -14,20 +14,20 @@ const Routes = ({ loggedIn }) => (
   <Router>
     <Scene key="root">
       <Scene key="login" component={Login} title="Login" initial={!loggedIn} hideNavBar />
-      <Scene key="main" tabs initial={loggedIn}>
-        <Scene key="tab1" title="Feed" icon={TabIcon} initial>
+      <Scene key="main" tabs initial={loggedIn} tabBarStyle={{ borderColor: '#000', borderTopWidth: 1 }}>
+        <Scene key="tab1" title="Feed" icon={FeedIcon} initial>
           <Scene key="feed" component={Feed} title="RapX" />
         </Scene>
-        <Scene key="tab2" title="Live" icon={TabIcon}>
+        <Scene key="tab2" title="Live" icon={LiveIcon}>
           <Scene key="live" component={Live} title="Live" />
         </Scene>
-        <Scene key="tab3" title="Battle" icon={TabIcon}>
+        <Scene key="tab3" title="Battle" icon={BattleIcon}>
           <Scene key="battle" component={Battle} title="Battle" />
         </Scene>
-        <Scene key="tab4" title="Activity" icon={TabIcon}>
+        <Scene key="tab4" title="Activity" icon={ActivityIcon}>
           <Scene key="activity" component={Activity} title="Activity" />
         </Scene>
-        <Scene key="tab5" title="Profile" icon={TabIcon}>
+        <Scene key="tab5" title="Profile" icon={ProfileIcon}>
           <Scene key="profile" component={Profile} title="Profile" />
         </Scene>
       </Scene>
