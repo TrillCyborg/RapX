@@ -1,8 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import { setFbAccessToken, toggleLoggedIn } from '../actions/User';
+
+// TODO all login / logout functions need to be moved to a lib and imported
+// Component must be documented and annoying comments removed
 
 function checkLoginState(accessToken) {
   if (accessToken) {
@@ -25,6 +29,7 @@ function checkLoginState(accessToken) {
           // // ...
         }).then(() => {
           console.log('CURRENT USER', firebase.auth().currentUser);
+          Actions.main({ type: 'reset' });
         });
       } else {
         // User is already signed-in Firebase with the correct user.
@@ -33,7 +38,7 @@ function checkLoginState(accessToken) {
   } else {
     // User is signed-out of Facebook.
     firebase.auth().signOut().then(() => {
-      // Sign-out successful.
+      Actions.login({ type: 'reset' });
     }, (/* error */) => {
       // An error happened.
     });

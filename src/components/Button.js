@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
 const Button = ({ onPress, text }) => {
@@ -8,6 +8,11 @@ const Button = ({ onPress, text }) => {
       <Text style={textStyle}>{text}</Text>
     </TouchableOpacity>
   );
+};
+
+Button.propTypes = {
+  onPress: PropTypes.func.isRequred,
+  text: PropTypes.string.isRequired,
 };
 
 const styles = {
