@@ -29,7 +29,7 @@ function checkLoginState(accessToken) {
           // // ...
         }).then(() => {
           console.log('CURRENT USER', firebase.auth().currentUser);
-          Actions.main();
+          Actions.register();
         });
       } else {
         // User is already signed-in Firebase with the correct user.
@@ -38,7 +38,7 @@ function checkLoginState(accessToken) {
   } else {
     // User is signed-out of Facebook.
     firebase.auth().signOut().then(() => {
-      Actions.login({ type: 'reset' });
+      Actions.welcome({ type: 'reset' });
     }, (/* error */) => {
       // An error happened.
     });
