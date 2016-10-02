@@ -1,21 +1,27 @@
 import React, { PropTypes } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const getIconName = (name, selected) => {
-  return `${name}${selected ? '' : '-outline'}`;
+const iconNames = {
+  feed: 'ios-home',
+  live: 'ios-radio',
+  battle: 'ios-microphone',
+  activity: 'ios-notifications',
+  profile: 'ios-person',
 };
+
+const getIconName = (name, selected) => `${name}${selected ? '' : '-outline'}`;
 
 const FeedIcon = ({ selected }) => (
   <Icon
-    name={getIconName('ios-home', selected)}
-    size={30}
+    name={getIconName(iconNames.feed, selected)}
+    size={styles.iconSize}
     color={selected ? styles.activeColor : styles.inactiveColor}
   />
 );
 
 const LiveIcon = ({ selected }) => (
   <Icon
-    name={getIconName('ios-radio', selected)}
+    name={getIconName(iconNames.live, selected)}
     size={30}
     color={selected ? styles.activeColor : styles.inactiveColor}
   />
@@ -23,7 +29,7 @@ const LiveIcon = ({ selected }) => (
 
 const BattleIcon = ({ selected }) => (
   <Icon
-    name={getIconName('ios-microphone', selected)}
+    name={getIconName(iconNames.battle, selected)}
     size={30}
     color={selected ? styles.activeColor : styles.inactiveColor}
   />
@@ -31,7 +37,7 @@ const BattleIcon = ({ selected }) => (
 
 const ActivityIcon = ({ selected }) => (
   <Icon
-    name={getIconName('ios-notifications', selected)}
+    name={getIconName(iconNames.activity, selected)}
     size={30}
     color={selected ? styles.activeColor : styles.inactiveColor}
   />
@@ -39,7 +45,7 @@ const ActivityIcon = ({ selected }) => (
 
 const ProfileIcon = ({ selected }) => (
   <Icon
-    name={getIconName('ios-person', selected)}
+    name={getIconName(iconNames.profile, selected)}
     size={30}
     color={selected ? styles.activeColor : styles.inactiveColor}
   />
@@ -48,6 +54,7 @@ const ProfileIcon = ({ selected }) => (
 const styles = {
   activeColor: '#673AB7',
   inactiveColor: '#000',
+  iconSize: 30,
 };
 
 // ios-disc - live
