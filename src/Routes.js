@@ -21,7 +21,7 @@ const Routes = ({ loggedIn }) => (
         <Scene key="login" component={Login} title="Login" initial hideNavBar />
         <Scene key="register" component={Register} title="Register" panHandlers={null} />
       </Scene>
-      <Scene key="main" tabs initial={loggedIn} tabBarStyle={{ borderColor: '#000', borderTopWidth: 1 }}>
+      <Scene key="main" tabs initial={loggedIn} tabBarStyle={{ borderColor: '#000', borderTopWidth: 1 }} pressOpacity={1}>
         <Scene key="tab1" title="Feed" icon={FeedIcon} initial>
           <Scene key="feed" component={Feed} title="RapX" />
         </Scene>

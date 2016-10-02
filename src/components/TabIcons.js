@@ -1,9 +1,13 @@
 import React, { PropTypes } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+const getIconName = (name, selected) => {
+  return `${name}${selected ? '' : '-outline'}`;
+};
+
 const FeedIcon = ({ selected }) => (
   <Icon
-    name="ios-home"
+    name={getIconName('ios-home', selected)}
     size={30}
     color={selected ? styles.activeColor : styles.inactiveColor}
   />
@@ -11,7 +15,7 @@ const FeedIcon = ({ selected }) => (
 
 const LiveIcon = ({ selected }) => (
   <Icon
-    name="ios-radio"
+    name={getIconName('ios-radio', selected)}
     size={30}
     color={selected ? styles.activeColor : styles.inactiveColor}
   />
@@ -19,7 +23,7 @@ const LiveIcon = ({ selected }) => (
 
 const BattleIcon = ({ selected }) => (
   <Icon
-    name="ios-microphone"
+    name={getIconName('ios-microphone', selected)}
     size={30}
     color={selected ? styles.activeColor : styles.inactiveColor}
   />
@@ -27,7 +31,7 @@ const BattleIcon = ({ selected }) => (
 
 const ActivityIcon = ({ selected }) => (
   <Icon
-    name="ios-notifications"
+    name={getIconName('ios-notifications', selected)}
     size={30}
     color={selected ? styles.activeColor : styles.inactiveColor}
   />
@@ -35,7 +39,7 @@ const ActivityIcon = ({ selected }) => (
 
 const ProfileIcon = ({ selected }) => (
   <Icon
-    name="ios-person"
+    name={getIconName('ios-person', selected)}
     size={30}
     color={selected ? styles.activeColor : styles.inactiveColor}
   />
