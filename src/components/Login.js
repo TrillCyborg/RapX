@@ -74,7 +74,7 @@ class Login extends Component {
       isUserRegistered(uid, (isRegistered) => {
         if (isRegistered) {
           this.props.setUsername(displayName);
-          Actions.main();
+          Actions.main({ type: 'reset' });
         } else {
           createNewUser({
             uid,
