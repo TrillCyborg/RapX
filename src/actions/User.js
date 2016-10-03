@@ -1,9 +1,15 @@
 import { user } from './Types';
 
 const setFbAccessToken = fbAccessToken => ({ type: user.setFbAccessToken, value: fbAccessToken });
-const toggleLoggedIn = () => ({ type: user.toggleLoggedIn });
+const setUsername = username => ({ type: user.setUsername, value: username });
+const setProfilePicUrl = url => ({ type: user.setProfilePicUrl, value: url });
+const setUid = uid => ({ type: user.setUid, value: uid });
+const setName = name => ({ type: user.setName, value: name });
 
 export {
   setFbAccessToken,
-  toggleLoggedIn,
+  setUsername,
+  setProfilePicUrl,
+  setUid,
+  setName,
 };

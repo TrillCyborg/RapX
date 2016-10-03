@@ -5,7 +5,15 @@ const example = {
 
 const user = {
   setFbAccessToken: 'SET_FB_ACCESS_TOKEN',
-  toggleLoggedIn: 'TOGGLE_LOGGED_IN',
+  setUsername: 'SET_USERNAME',
+  setProfilePicUrl: 'SET_PROFILE_PIC_URL',
+  setUid: 'SET_UID',
+  setName: 'SET_NAME',
 };
 
-export { example, user };
+const app = {
+  toggleLoggedIn: 'TOGGLE_LOGGED_IN',
+  setRegistered: 'SET_REGISTERED',
+};
+
+export { example, user, app };
