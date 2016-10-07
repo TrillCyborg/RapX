@@ -2,6 +2,22 @@ import firebase from 'firebase';
 import Store from '../store/Store';
 import { setRegistered } from '../actions';
 
+// "uid1": {
+//   "username": "trillcyborg",
+//   "name": "Supa Jaiyan",
+//   "picUrl": "https://url.com/pic1",
+//   "email": "jason@rapx.com",
+//   "bio": "someting about a bio",
+//   "fbid": "9871264982634",
+//   "gender": "male",
+//   "birthday": "1996-04-07",
+//   "age_range": "18-21",
+//   "fbAccessToken": "jfnl89342hof8h583rjefwe",
+//   "isRegistered": true,
+//   "createdAt": 1475442341566,
+//   "updatedAt": 1475442342328,
+// }
+
 const createNewUser = ({ uid, email, fbAccessToken, fbid }) => {
   firebase.database().ref(`users/${uid}`).set({
     email,
