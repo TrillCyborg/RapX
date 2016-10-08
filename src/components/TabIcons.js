@@ -1,19 +1,20 @@
 import React, { PropTypes } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { tabBarIcons } from '../styles/icons.json';
 
-const iconNames = {
-  feed: 'ios-home',
-  live: 'ios-radio',
-  battle: 'ios-microphone',
-  activity: 'ios-notifications',
-  profile: 'ios-person',
-};
+const {
+  feedIcon,
+  liveIcon,
+  battleIcon,
+  activityIcon,
+  profileIcon,
+} = tabBarIcons;
 
 const getIconName = (name, selected) => `${name}${selected ? '' : '-outline'}`;
 
 const FeedIcon = ({ selected }) => (
   <Icon
-    name={getIconName(iconNames.feed, selected)}
+    name={getIconName(feedIcon, selected)}
     size={styles.iconSize}
     color={selected ? styles.activeColor : styles.inactiveColor}
   />
@@ -21,7 +22,7 @@ const FeedIcon = ({ selected }) => (
 
 const LiveIcon = ({ selected }) => (
   <Icon
-    name={getIconName(iconNames.live, selected)}
+    name={getIconName(liveIcon, selected)}
     size={30}
     color={selected ? styles.activeColor : styles.inactiveColor}
   />
@@ -29,7 +30,7 @@ const LiveIcon = ({ selected }) => (
 
 const BattleIcon = ({ selected }) => (
   <Icon
-    name={getIconName(iconNames.battle, selected)}
+    name={getIconName(battleIcon, selected)}
     size={30}
     color={selected ? styles.activeColor : styles.inactiveColor}
   />
@@ -37,7 +38,7 @@ const BattleIcon = ({ selected }) => (
 
 const ActivityIcon = ({ selected }) => (
   <Icon
-    name={getIconName(iconNames.activity, selected)}
+    name={getIconName(activityIcon, selected)}
     size={30}
     color={selected ? styles.activeColor : styles.inactiveColor}
   />
@@ -45,7 +46,7 @@ const ActivityIcon = ({ selected }) => (
 
 const ProfileIcon = ({ selected }) => (
   <Icon
-    name={getIconName(iconNames.profile, selected)}
+    name={getIconName(profileIcon, selected)}
     size={30}
     color={selected ? styles.activeColor : styles.inactiveColor}
   />

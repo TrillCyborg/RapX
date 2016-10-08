@@ -1,7 +1,5 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import FacebookLoginButton from './FacebookLoginButton';
 
 const Feed = () => {
   const { container, welcome, instructions } = styles;
@@ -17,10 +15,6 @@ const Feed = () => {
         Press Cmd+R to reload,{'\n'}
         Cmd+D or shake for dev menu
       </Text>
-      <FacebookLoginButton
-        onLoginFinished={() => {}}
-        onLogoutFinished={() => { Actions.welcome(); }}
-      />
     </View>
   );
 };

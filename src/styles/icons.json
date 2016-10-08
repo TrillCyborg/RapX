@@ -1,0 +1,16 @@
+{
+  "tabBarIcons": {
+    "feedIcon": "ios-home",
+    "liveIcon": "ios-radio",
+    "battleIcon": "ios-microphone",
+    "activityIcon": "ios-notifications",
+    "profileIcon": "ios-person",
+  },
+  "navBarIcons": {
+    "settingsIcon": "ios-settings",
+  },
+  "userIcons": {
+    "nameIcon": "ios-contact-outline",
+    "usernameIcon": "ios-at-outline",
+  },
+}

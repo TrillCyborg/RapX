@@ -16,4 +16,17 @@ const app = {
   setRegistered: 'SET_REGISTERED',
 };
 
-export { example, user, app };
+const temp = {
+  reset: 'RESET_TEMP',
+  resetTempUser: 'RESET_TEMP_USER',
+  setTempName: 'SET_TEMP_NAME',
+  setTempUsername: 'SET_TEMP_USERNAME',
+  setTempProfilePicUrl: 'SET_TEMP_PROFILE_PIC_URL',
+};
+
+export {
+  example,
+  user,
+  app,
+  temp,
+};
