@@ -31,7 +31,7 @@ const firebaseUploadBlob = (blob, location) => firebase.storage()
 
 const setProfilePic = ({ path, type }, isUrl) => {
   let upload;
-  const location = `profile_pics/${getCurrentUser()}.${getExt(path)}`;
+  const location = `profile_pics/${getCurrentUser().uid}.${getExt(path)}`;
   if (isUrl) {
     upload = getBlobFromUrl(path).then(blob => firebaseUploadBlob(blob, location));
   } else {

@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-// import { Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { Button, IconTextInput, ProfilePicInput } from './Input';

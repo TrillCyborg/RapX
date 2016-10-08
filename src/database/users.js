@@ -19,7 +19,7 @@ import { setRegistered } from '../actions';
 // }
 
 const createNewUser = ({ uid, email, fbAccessToken, fbid }) => {
-  firebase.database().ref(`users/${uid}`).set({
+  return firebase.database().ref(`users/${uid}`).set({
     email,
     fbAccessToken,
     fbid,
@@ -29,7 +29,13 @@ const createNewUser = ({ uid, email, fbAccessToken, fbid }) => {
 };
 
 // TODO: check map function to make sure only allowed fields are here
-const updateUser = (uid, updates) => firebase.database().ref(`users/${uid}`).update(updates);
+const updateUser = (uid, updates) => {
+  const params = {
+    ...updates,
+    updatedAt: firebase.database.ServerValue.TIMESTAMP,
+  };
+  return firebase.database().ref(`users/${uid}`).update(params);
+};
 
 const isUserRegistered = (uid, callback) => {
   firebase.database().ref(`users/${uid}/isRegistered`)
@@ -51,26 +57,17 @@ const getUser = (uid, callback) => {
     .on('value', callback);
 };
 
-const getUserOnce = (uid, callback) => {
-  firebase.database().ref(`users/${uid}`)
-    .once('value')
-    .then(callback);
-};
+const getUserOnce = uid => firebase.database().ref(`users/${uid}`).once('value');
 
 const registerUser = (uid, userData) => {
   const params = userData;
   params.isRegistered = true;
   params.updatedAt = firebase.database.ServerValue.TIMESTAMP;
-  firebase.database().ref(`users/${uid}`).set(params);
-  firebase.auth().currentUser.updateProfile({
-    displayName: userData.username,
-    photoURL: userData.picUrl,
-  })
-  .then(() => {
-    // Store.dispatch(setRegistered(true));
-  }, (error) => {
-    console.log('ERROR', error);
-  });
+  return firebase.database().ref(`users/${uid}`).set(params)
+    .then(() => firebase.auth().currentUser.updateProfile({
+      displayName: userData.username,
+      photoURL: userData.picUrl,
+    }));
 };
 
 export {

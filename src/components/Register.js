@@ -3,13 +3,11 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { setUsername, setProfilePicUrl, setName } from '../actions';
-import { getUserOnce, registerUser } from '../database/users';
 import { userIcons } from '../styles/icons.json';
 import { setProfilePic } from '../lib/storage';
+import { updateUser, getUserOnce, registerUser } from '../lib/users';
 import { Button, IconTextInput, ProfilePicInput } from './Input';
 import ScreenContainer from './ScreenContainer';
-
-const defaultProfilePicUrl = 'https://facebook.github.io/react/img/logo_og.png'; // TODO get a default pic
 
 class Register extends Component {
   constructor(props) {
@@ -29,16 +27,12 @@ class Register extends Component {
   getUserFbUserData() {
     const { fbAccessToken, uid } = this.props.user;
     axios.get(`https://graph.facebook.com/v2.7/me?fields=id,first_name,last_name,gender,email,age_range,friends&access_token=${fbAccessToken}`)
-      .then((response) => {
-        getUserOnce(uid, (snapshot) => {
-          this.registerData = snapshot.val();
-          this.registerData.gender = response.data.gender;
-          this.registerData.age_range = `${response.data.age_range.min}-${response.data.age_range.max}`;
-          this.setFBPic();
-        })
-        .catch((error) => {
-          console.log('ERROR', error);
-        });
+      .then(response => getUserOnce(uid).then(snapshot => ({ snapshot, response })))
+      .then(({ snapshot, response }) => {
+        this.registerData = snapshot.val();
+        this.registerData.gender = response.data.gender;
+        this.registerData.age_range = `${response.data.age_range.min}-${response.data.age_range.max}`;
+        this.setFBPic();
       })
       .catch((error) => {
         console.log('ERROR', error);
@@ -47,7 +41,9 @@ class Register extends Component {
 
   setFBPic() {
     axios.get(`https://graph.facebook.com/v2.7/me/picture?type=large&redirect=0&access_token=${this.props.user.fbAccessToken}`)
-      .then(response => setProfilePic({ path: response.data.data.url }, true));
+      .then(response => setProfilePic({ path: response.data.data.url }, true))
+      .then(picUrl => updateUser(this.props.user.uid, { picUrl }).then(() => picUrl))
+      .then(picUrl => this.props.setProfilePicUrl(picUrl));
   }
 
   registerOnPress() {
@@ -61,11 +57,14 @@ class Register extends Component {
 
   selectImage({ path, mime }) {
     setProfilePic({ path, type: mime })
-      .then((success) => {
-        if (success) {
+      .then((picUrl) => {
+        if (picUrl) {
           this.setState({ changedImage: true });
         }
-      }).catch((error) => {
+        return updateUser(this.props.user.uid, { picUrl }).then(() => picUrl);
+      })
+      .then(picUrl => this.props.setProfilePicUrl(picUrl))
+      .catch((error) => {
         console.log('ERROR', error);
       });
   }
@@ -75,7 +74,7 @@ class Register extends Component {
     return (
       <ScreenContainer>
         <ProfilePicInput
-          picUrl={this.props.user.picUrl || defaultProfilePicUrl}
+          picUrl={this.props.user.picUrl}
           onPressSet={this.selectImage}
         />
         <IconTextInput
@@ -111,6 +110,7 @@ Register.propTypes = {
   }),
   setUsername: PropTypes.func.isRequired,
   setName: PropTypes.func.isRequired,
+  setProfilePicUrl: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -121,5 +121,4 @@ export default connect(mapStateToProps, {
   setUsername,
   setProfilePicUrl,
   setName,
-  registerUser,
 })(Register);

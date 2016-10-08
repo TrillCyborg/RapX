@@ -3,6 +3,8 @@ import { View, Text, Image } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import { Button } from './';
 
+const defaultProfilePicUrl = 'https://facebook.github.io/react/img/logo_og.png'; // TODO get a default pic
+
 const ProfilePicInput = ({ picUrl, onPressSet }) => {
   const openImagePicker = () => {
     ImagePicker.openPicker({
@@ -17,7 +19,7 @@ const ProfilePicInput = ({ picUrl, onPressSet }) => {
       <Text>Profile Pic</Text>
       <Image
         style={styles.profilePicStyle}
-        source={{ uri: picUrl }}
+        source={{ uri: picUrl || defaultProfilePicUrl }}
       />
       <Button onPress={openImagePicker}>
         Change Image

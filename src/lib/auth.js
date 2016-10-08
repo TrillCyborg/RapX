@@ -2,13 +2,13 @@ import firebase from 'firebase';
 import { AccessToken } from 'react-native-fbsdk';
 import Store from '../store/Store';
 import { isUserRegistered, getUserOnce, createNewUser } from '../database/users';
-import { setCurrentUserData } from '../lib/users';
 import {
   setFbAccessToken,
   toggleLoggedIn,
   setUsername,
   setProfilePicUrl,
   setUid,
+  setName,
 } from '../actions';
 
 const getCurrentUser = () => firebase.auth().currentUser;
@@ -30,14 +30,17 @@ const initLogin = (callback) => {
           Store.dispatch(setUsername(user.displayName));
           Store.dispatch(setProfilePicUrl(user.photoURL));
           Store.dispatch(toggleLoggedIn());
-          const unsubscribeStore = Store.subscribe(() => {
-            callback();
-          });
           isUserRegistered(user.uid, (isRegistered) => {
             if (isRegistered) {
-              getUserOnce(user.uid, setCurrentUserData);
+              getUserOnce(user.uid)
+                .then((snapshot) => {
+                  const unsubscribeStore = Store.subscribe(() => {
+                    unsubscribeStore();
+                    callback();
+                  });
+                  Store.dispatch(setName(snapshot.val().name));
+                });
             }
-            unsubscribeStore();
           });
         } else if (user) {
           signOut();
@@ -73,16 +76,20 @@ const signIn = (callback) => {
     Store.dispatch(toggleLoggedIn());
     isUserRegistered(uid, (isRegistered) => {
       if (isRegistered) {
-        Store.dispatch(setUsername(displayName));
+        getUserOnce(uid)
+          .then((snapshot) => {
+            Store.dispatch(setUsername(displayName));
+            Store.dispatch(setName(snapshot.val().name));
+          })
+          .then(callback);
       } else {
         createNewUser({
           uid,
           email,
           fbAccessToken: fbAccessToken.accessToken,
           fbid: fbAccessToken.userID,
-        });
+        }).then(callback);
       }
-      callback();
     });
   }
 

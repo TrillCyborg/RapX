@@ -1,14 +1,9 @@
-import Store from '../store/Store';
-import { setName, setUsername, setProfilePicUrl } from '../actions';
-import { updateUser as updateUserDB } from '../database/users';
+import {
+  updateUser as updateUserDB,
+  getUserOnce as getUserOnceDB,
+  registerUser as registerUserDB,
+} from '../database/users';
 import { updateProfile } from './auth';
-
-const setCurrentUserData = (user) => {
-  const { name, username, picUrl } = user.val();
-  Store.dispatch(setName(name));
-  Store.dispatch(setUsername(username));
-  Store.dispatch(setProfilePicUrl(picUrl));
-};
 
 const updateUser = (uid, updates) => updateUserDB(uid, updates)
   .then(() => {
@@ -22,7 +17,11 @@ const updateUser = (uid, updates) => updateUserDB(uid, updates)
     return true;
   });
 
+const getUserOnce = getUserOnceDB;
+const registerUser = registerUserDB;
+
 export {
-  setCurrentUserData,
   updateUser,
+  getUserOnce,
+  registerUser,
 };
