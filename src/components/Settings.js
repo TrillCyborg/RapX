@@ -16,15 +16,14 @@ import {
   toggleLoggedIn,
 } from '../actions';
 import { userIcons } from '../styles/icons.json';
-import { setProfilePic } from '../lib/storage';
 import { signOut } from '../lib/auth';
+import { updateUser } from '../lib/users';
+import { setProfilePic } from '../lib/storage';
 
 class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = { mime: '', changedImage: false };
-    this.onChangeName = this.onChangeName.bind(this);
-    this.onChangeUsername = this.onChangeUsername.bind(this);
     this.selectProfilePic = this.selectProfilePic.bind(this);
     this.saveChanges = this.saveChanges.bind(this);
     this.onLogoutFinished = this.onLogoutFinished.bind(this);
@@ -46,14 +45,6 @@ class Settings extends Component {
     signOut().then(() => Actions.welcome({ type: 'reset' }));
   }
 
-  onChangeName(name) {
-    this.props.setTempName(name);
-  }
-
-  onChangeUsername(username) {
-    this.props.setTempUsername(username);
-  }
-
   selectProfilePic({ path, mime }) {
     this.setState({ mime });
     this.props.setTempProfilePicUrl(path);
@@ -61,26 +52,33 @@ class Settings extends Component {
   }
 
   saveChanges() {
-    this.props.setUsername(this.props.temp.username);
-    this.props.setName(this.props.temp.name);
-    this.props.setProfilePicUrl(this.props.temp.picUrl);
+    let promise;
     if (this.props.temp.picUrl !== this.props.user.picUrl) {
-      setProfilePic({ path: this.props.temp.picUrl, type: this.state.mime })
-        .then((success) => {
-          if (success) {
+      promise = setProfilePic({ path: this.props.temp.picUrl, type: this.state.mime })
+        .then((picUrl) => {
+          if (picUrl) {
             this.setState({ changedImage: false });
           }
-        }).catch((error) => {
-          console.log('ERROR', error);
+          return updateUser(this.props.user.uid, {
+            picUrl,
+            username: this.props.temp.username,
+            name: this.props.temp.name,
+          });
         });
+    } else {
+      promise = updateUser(this.props.user.uid, {
+        username: this.props.temp.username,
+        name: this.props.temp.name,
+      });
     }
-
-    // TODO: setProfilePicUrl needs to be in user lib and calls storage lib function
-    // when saving changes:
-    // 0. never talk from component to db layer. just libs
-    // 1. update db
-    // 2. update auth
-    // 3. update store
+    promise.then(() => {
+      this.props.setUsername(this.props.temp.username);
+      this.props.setName(this.props.temp.name);
+      this.props.setProfilePicUrl(this.props.temp.picUrl);
+    })
+    .catch((error) => {
+      console.log('ERROR', error);
+    });
   }
 
   render() {
@@ -95,13 +93,13 @@ class Settings extends Component {
           onPressSet={this.selectProfilePic}
         />
         <IconTextInput
-          onChangeText={this.onChangeName}
+          onChangeText={name => this.props.setTempName(name)}
           value={this.props.temp.name}
           iconName={nameIcon}
           placeholder="Name"
         />
         <IconTextInput
-          onChangeText={this.onChangeUsername}
+          onChangeText={username => this.props.setTempUsername(username)}
           value={this.props.temp.username}
           iconName={usernameIcon}
           placeholder="Username"
@@ -121,6 +119,7 @@ Settings.propTypes = {
     username: PropTypes.string.isRequired,
     picUrl: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    uid: PropTypes.string.isRequired,
   }),
   temp: PropTypes.shape({
     username: PropTypes.string.isRequired,

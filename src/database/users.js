@@ -28,7 +28,10 @@ const createNewUser = ({ uid, email, fbAccessToken, fbid }) => {
   });
 };
 
-const isUserRegistered = (uid, handler) => {
+// TODO: check map function to make sure only allowed fields are here
+const updateUser = (uid, updates) => firebase.database().ref(`users/${uid}`).update(updates);
+
+const isUserRegistered = (uid, callback) => {
   firebase.database().ref(`users/${uid}/isRegistered`)
     .once('value')
     .then((snapshot) => {
@@ -37,16 +40,21 @@ const isUserRegistered = (uid, handler) => {
       } else {
         Store.dispatch(setRegistered(false));
       }
-      if (handler) {
-        handler(snapshot.val());
+      if (callback) {
+        callback(snapshot.val());
       }
     });
 };
 
-const getUserOnce = (uid, handler) => {
+const getUser = (uid, callback) => {
+  firebase.database().ref(`users/${uid}`)
+    .on('value', callback);
+};
+
+const getUserOnce = (uid, callback) => {
   firebase.database().ref(`users/${uid}`)
     .once('value')
-    .then(handler);
+    .then(callback);
 };
 
 const registerUser = (uid, userData) => {
@@ -59,7 +67,7 @@ const registerUser = (uid, userData) => {
     photoURL: userData.picUrl,
   })
   .then(() => {
-    Store.dispatch(setRegistered(true));
+    // Store.dispatch(setRegistered(true));
   }, (error) => {
     console.log('ERROR', error);
   });
@@ -67,7 +75,9 @@ const registerUser = (uid, userData) => {
 
 export {
   createNewUser,
+  updateUser,
   isUserRegistered,
+  getUser,
   getUserOnce,
   registerUser,
 };
