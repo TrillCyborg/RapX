@@ -1,13 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-import { View, Text, TextInput, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import ImagePicker from 'react-native-image-crop-picker';
 import { setUsername, setProfilePicUrl, setName } from '../actions';
 import { getUserOnce, registerUser } from '../database/users';
+import { userIcons } from '../styles/icons.json';
 import { setProfilePic } from '../lib/storage';
-import Button from './Button';
+import { Button, IconTextInput, ProfilePicInput } from './Input';
+import ScreenContainer from './ScreenContainer';
 
 const defaultProfilePicUrl = 'https://facebook.github.io/react/img/logo_og.png'; // TODO get a default pic
 
@@ -59,44 +59,36 @@ class Register extends Component {
     Actions.main();
   }
 
-  selectImage() {
-    ImagePicker.openPicker({
-      width: 400,
-      height: 400,
-      cropping: true,
-    }).then(({ path, mime }) => setProfilePic({ path, type: mime }))
-    .then((success) => {
-      if (success) {
-        this.setState({ changedImage: true });
-      }
-    }).catch((error) => {
-      console.log('ERROR', error);
-    });
+  selectImage({ path, mime }) {
+    setProfilePic({ path, type: mime })
+      .then((success) => {
+        if (success) {
+          this.setState({ changedImage: true });
+        }
+      }).catch((error) => {
+        console.log('ERROR', error);
+      });
   }
 
   render() {
-    const { containerStyle, inputStyle, profilePicStyle } = styles;
+    const { usernameIcon, nameIcon } = userIcons;
     return (
-      <View style={containerStyle}>
-        <Text>Profile Pic</Text>
-        <Image
-          style={profilePicStyle}
-          source={{ uri: this.props.user.picUrl || defaultProfilePicUrl }}
+      <ScreenContainer>
+        <ProfilePicInput
+          picUrl={this.props.user.picUrl || defaultProfilePicUrl}
+          onPressSet={this.selectImage}
         />
-        <Button onPress={this.selectImage}>
-          Change Image
-        </Button>
-        <Text>Name</Text>
-        <TextInput
-          style={inputStyle}
+        <IconTextInput
           onChangeText={name => this.props.setName(name)}
           value={this.props.user.name}
+          iconName={nameIcon}
+          placeholder="Name"
         />
-        <Text>Username</Text>
-        <TextInput
-          style={inputStyle}
+        <IconTextInput
           onChangeText={username => this.props.setUsername(username)}
           value={this.props.user.username}
+          iconName={usernameIcon}
+          placeholder="Username"
         />
         <Button
           disabled={!(this.props.user.username.length && this.props.user.name.length)}
@@ -104,7 +96,7 @@ class Register extends Component {
         >
           Register
         </Button>
-      </View>
+      </ScreenContainer>
     );
   }
 }
@@ -119,27 +111,6 @@ Register.propTypes = {
   }),
   setUsername: PropTypes.func.isRequired,
   setName: PropTypes.func.isRequired,
-};
-
-const styles = {
-  containerStyle: {
-    flex: 1,
-    marginTop: 70,
-    backgroundColor: '#F5FCFF',
-  },
-  inputStyle: {
-    marginBottom: 5,
-    marginLeft: 5,
-    marginRight: 5,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-  },
-  profilePicStyle: {
-    width: 100,
-    height: 100,
-  },
 };
 
 const mapStateToProps = state => ({
