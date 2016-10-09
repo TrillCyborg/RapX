@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "mocha --require react-native-mock/mock --compilers js:babel-core/register --recursive test/*.js"
   },
   "dependencies": {
     "axios": "^0.14.0",
@@ -19,7 +20,10 @@
     "redux": "^3.6.0"
   },
   "devDependencies": {
+    "babel-core": "^6.17.0",
+    "babel-preset-react-native": "^1.9.0",
     "chai": "^3.5.0",
+    "chai-enzyme": "^0.5.2",
     "enzyme": "^2.4.1",
     "eslint": "^3.6.1",
     "eslint-config-airbnb": "^12.0.0",
@@ -28,6 +32,7 @@
     "eslint-plugin-react": "^6.3.0",
     "react-addons-test-utils": "^15.3.2",
     "react-dom": "^15.3.2",
-    "react-native-mock": "^0.2.7"
+    "react-native-mock": "^0.2.7",
+    "sinon": "^1.17.6"
   }
 }
