@@ -13,7 +13,7 @@ class Login extends Component {
 
   onLoginFinished(error, result) {
     if (error) {
-      console.log(`Login failed with error: ${result.error}`);
+      console.log(`Login failed with error: ${JSON.stringify(error)}`);
     } else if (result.isCancelled) {
       console.log('Login was cancelled');
     } else {
