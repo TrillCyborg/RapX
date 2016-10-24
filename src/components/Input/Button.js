@@ -1,17 +1,21 @@
 import React, { PropTypes } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
-const Button = ({ onPress, children, disabled }) => {
+const Button = ({ onPress, children, disabled, style }) => {
   const { textStyle, buttonStyle, disabledButtonStyle, disabledTextStyle } = styles;
+  let currentButtonStyle = disabled ? disabledButtonStyle : buttonStyle;
+  if (style) {
+    currentButtonStyle = { ...currentButtonStyle, ...style };
+  }
   if (disabled) {
     return (
-      <View style={disabledButtonStyle}>
+      <View style={currentButtonStyle}>
         <Text style={disabledTextStyle}>{children}</Text>
       </View>
     );
   }
   return (
-    <TouchableOpacity style={buttonStyle} onPress={onPress}>
+    <TouchableOpacity style={currentButtonStyle} onPress={onPress}>
       <Text style={textStyle}>{children}</Text>
     </TouchableOpacity>
   );
@@ -21,6 +25,7 @@ Button.propTypes = {
   onPress: PropTypes.func,
   children: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
+  style: PropTypes.object,
 };
 
 const styles = {
