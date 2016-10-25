@@ -86,7 +86,7 @@ class Settings extends Component {
       && !this.state.changedImage;
     const { nameIcon, usernameIcon } = userIcons;
     return (
-      <ScreenContainer>
+      <ScreenContainer center>
         <ProfilePicInput
           picUrl={this.props.temp.picUrl}
           onPressSet={this.selectProfilePic}
@@ -103,7 +103,13 @@ class Settings extends Component {
           iconName={usernameIcon}
           placeholder="Username"
         />
-        <Button disabled={noChanges} onPress={this.saveChanges}>Save Changes</Button>
+        <Button
+          style={styles.margin}
+          disabled={noChanges}
+          onPress={this.saveChanges}
+        >
+          Save Changes
+        </Button>
         <FacebookLoginButton
           onLoginFinished={() => {}}
           onLogoutFinished={this.onLogoutFinished}
@@ -139,6 +145,13 @@ const mapStateToProps = state => ({
   user: state.user,
   temp: state.temp.user,
 });
+
+const styles = {
+  margin: {
+    marginTop: 100,
+    marginBottom: 5,
+  },
+};
 
 export default connect(mapStateToProps, {
   setUsername,

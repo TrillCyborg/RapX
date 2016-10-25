@@ -22,14 +22,12 @@ const styles = {
   container: {
     flex: 1,
     marginTop: 70,
-    backgroundColor: '#F5FCFF',
   },
   containerCenter: {
     flex: 1,
     marginTop: 70,
-    backgroundColor: '#F5FCFF',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start', // vertical
+    alignItems: 'center', // horizontal
   },
 };
 

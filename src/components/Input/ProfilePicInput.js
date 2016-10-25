@@ -21,7 +21,7 @@ const ProfilePicInput = ({ picUrl, onPressSet }) => {
         style={styles.profilePicStyle}
         source={{ uri: picUrl || defaultProfilePicUrl }}
       />
-      <Button onPress={openImagePicker}>
+      <Button onPress={openImagePicker} style={styles.buttonStyle}>
         Change Image
       </Button>
     </View>
@@ -37,6 +37,12 @@ const styles = {
   profilePicStyle: {
     width: 100,
     height: 100,
+  },
+  buttonStyle: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginTop: 10,
+    marginBottom: 10,
   },
 };
 

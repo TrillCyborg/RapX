@@ -1,20 +1,12 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import ScreenContainer from './ScreenContainer';
 
 const Live = () => (
-  <View style={styles.container}>
+  <ScreenContainer center>
     <Text onPress={() => Actions.modal()}>Live</Text>
-  </View>
+  </ScreenContainer>
 );
-
-const styles = {
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-};
 
 export default Live;
