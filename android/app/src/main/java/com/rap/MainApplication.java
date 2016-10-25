@@ -4,6 +4,8 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.audioStreaming.ReactNativeAudioStreamingPackage;
+import com.oney.WebRTCModule.WebRTCModulePackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.rnfs.RNFSPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
@@ -27,6 +29,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeAudioStreamingPackage(),
+            new WebRTCModulePackage(),
             new RNFetchBlobPackage(),
             new RNFSPackage(),
             new PickerPackage()
