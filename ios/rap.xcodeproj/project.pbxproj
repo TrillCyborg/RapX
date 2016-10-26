@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -42,8 +43,6 @@
 		1A44BDBC1DBD757F0086F29B /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A44BDB21DBD757F0086F29B /* libsqlite3.tbd */; };
 		1A44BDBD1DBD757F0086F29B /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A44BDB31DBD757F0086F29B /* libstdc++.tbd */; };
 		1A44BDBE1DBD757F0086F29B /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A44BDB41DBD757F0086F29B /* VideoToolbox.framework */; };
-		1A44BE6B1DBEBD700086F29B /* libReactNativeAudioStreaming.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A44BE611DBEBD1F0086F29B /* libReactNativeAudioStreaming.a */; };
-		1A44BE6C1DBEBD700086F29B /* libStreamingKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A44BE6A1DBEBD470086F29B /* libStreamingKit.a */; };
 		1ADB67C51D9ED8AE00D5E662 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ADB67C21D9ED8AE00D5E662 /* FBSDKCoreKit.framework */; };
 		1ADB67C61D9ED8AE00D5E662 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ADB67C31D9ED8AE00D5E662 /* FBSDKLoginKit.framework */; };
 		1ADB67C71D9ED8AE00D5E662 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ADB67C41D9ED8AE00D5E662 /* FBSDKShareKit.framework */; };
@@ -154,27 +153,6 @@
 			remoteGlobalIDString = 35A2221F1CB493700015FD5C;
 			remoteInfo = RCTWebRTC;
 		};
-		1A44BE601DBEBD1F0086F29B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1A44BE401DBEBD1E0086F29B /* ReactNativeAudioStreaming.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = ReactNativeAudioStreaming;
-		};
-		1A44BE671DBEBD470086F29B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1A44BE621DBEBD460086F29B /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3D796608261BE7EF75B9CA099BE45490;
-			remoteInfo = "Pods-ReactNativeAudioStreaming";
-		};
-		1A44BE691DBEBD470086F29B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1A44BE621DBEBD460086F29B /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8354B6B10F10687EE626DF43663B075A;
-			remoteInfo = StreamingKit;
-		};
 		1ADB67B61D9ED20700D5E662 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 458FD538E1BD4761A22AF506 /* RCTFBSDK.xcodeproj */;
@@ -262,8 +240,6 @@
 		1A44BDB21DBD757F0086F29B /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		1A44BDB31DBD757F0086F29B /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		1A44BDB41DBD757F0086F29B /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
-		1A44BE401DBEBD1E0086F29B /* ReactNativeAudioStreaming.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeAudioStreaming.xcodeproj; path = "../node_modules/react-native-audio-streaming/ios/ReactNativeAudioStreaming.xcodeproj"; sourceTree = "<group>"; };
-		1A44BE621DBEBD460086F29B /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = "../node_modules/react-native-audio-streaming/ios/Pods/Pods.xcodeproj"; sourceTree = "<group>"; };
 		1AA573EB1DBCD92B00D10146 /* rap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = rap.entitlements; path = rap/rap.entitlements; sourceTree = "<group>"; };
 		1ADB67C21D9ED8AE00D5E662 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		1ADB67C31D9ED8AE00D5E662 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
@@ -302,8 +278,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A0DAFCB1DBFB3C5008D1261 /* libRNFetchBlob.a in Frameworks */,
-				1A44BE6B1DBEBD700086F29B /* libReactNativeAudioStreaming.a in Frameworks */,
-				1A44BE6C1DBEBD700086F29B /* libStreamingKit.a in Frameworks */,
 				1A44BDB51DBD757F0086F29B /* AudioToolbox.framework in Frameworks */,
 				1A44BDB61DBD757F0086F29B /* AVFoundation.framework in Frameworks */,
 				1A44BDB71DBD757F0086F29B /* CoreAudio.framework in Frameworks */,
@@ -463,23 +437,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1A44BE411DBEBD1E0086F29B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1A44BE611DBEBD1F0086F29B /* libReactNativeAudioStreaming.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		1A44BE631DBEBD460086F29B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1A44BE681DBEBD470086F29B /* libPods-ReactNativeAudioStreaming.a */,
-				1A44BE6A1DBEBD470086F29B /* libStreamingKit.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		1ADB67B21D9ED20400D5E662 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -562,8 +519,6 @@
 			isa = PBXGroup;
 			children = (
 				1A0DAFC51DBFB37F008D1261 /* RNFetchBlob.xcodeproj */,
-				1A44BE621DBEBD460086F29B /* Pods.xcodeproj */,
-				1A44BE401DBEBD1E0086F29B /* ReactNativeAudioStreaming.xcodeproj */,
 				1A44BD921DBD73CD0086F29B /* RCTWebRTC.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -694,10 +649,6 @@
 					ProjectRef = 2CD3572C1ACF448894029DCD /* ImageCropPicker.xcodeproj */;
 				},
 				{
-					ProductGroup = 1A44BE631DBEBD460086F29B /* Products */;
-					ProjectRef = 1A44BE621DBEBD460086F29B /* Pods.xcodeproj */;
-				},
-				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
@@ -744,10 +695,6 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-				},
-				{
-					ProductGroup = 1A44BE411DBEBD1E0086F29B /* Products */;
-					ProjectRef = 1A44BE401DBEBD1E0086F29B /* ReactNativeAudioStreaming.xcodeproj */;
 				},
 				{
 					ProductGroup = 1A0DAFC61DBFB37F008D1261 /* Products */;
@@ -842,27 +789,6 @@
 			fileType = archive.ar;
 			path = libRCTWebRTC.a;
 			remoteRef = 1A44BDA01DBD73CD0086F29B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		1A44BE611DBEBD1F0086F29B /* libReactNativeAudioStreaming.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libReactNativeAudioStreaming.a;
-			remoteRef = 1A44BE601DBEBD1F0086F29B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		1A44BE681DBEBD470086F29B /* libPods-ReactNativeAudioStreaming.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libPods-ReactNativeAudioStreaming.a";
-			remoteRef = 1A44BE671DBEBD470086F29B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		1A44BE6A1DBEBD470086F29B /* libStreamingKit.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libStreamingKit.a;
-			remoteRef = 1A44BE691DBEBD470086F29B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		1ADB67B71D9ED20700D5E662 /* libRCTFBSDK.a */ = {

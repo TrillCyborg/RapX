@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { Button, IconTextInput, ProfilePicInput } from './Input';
+import { Button } from 'react-native-elements';
+
+import { IconTextInput, ProfilePicInput } from './Input';
 import ScreenContainer from './ScreenContainer';
 import FacebookLoginButton from './FacebookLoginButton';
 import {
@@ -104,13 +106,16 @@ class Settings extends Component {
           placeholder="Username"
         />
         <Button
-          style={styles.margin}
+          title="Save Changes"
+          buttonStyle={styles.margin}
           disabled={noChanges}
           onPress={this.saveChanges}
-        >
-          Save Changes
-        </Button>
+          backgroundColor="#397af8"
+          small
+          raised
+        />
         <FacebookLoginButton
+          style={{ justifyContent: 'flex-end' }}
           onLoginFinished={() => {}}
           onLogoutFinished={this.onLogoutFinished}
         />
@@ -148,8 +153,8 @@ const mapStateToProps = state => ({
 
 const styles = {
   margin: {
-    marginTop: 100,
-    marginBottom: 5,
+    marginTop: 10,
+    marginBottom: 10,
   },
 };
 

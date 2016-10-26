@@ -24,7 +24,7 @@ class Routes extends Component {
             <Scene key="login" component={Login} title="Login" initial={!this.props.loggedIn} hideNavBar />
             <Scene key="register" component={Register} title="Register" initial={this.props.loggedIn && !this.props.registered} hideNavBar panHandlers={null} />
           </Scene>
-          <Scene key="main" tabs initial={this.props.loggedIn && this.props.registered} tabBarStyle={{ borderColor: '#000', borderTopWidth: 1 }} pressOpacity={1}>
+          <Scene key="main" tabs initial={this.props.loggedIn && this.props.registered} tabBarStyle={{ borderColor: '#ddd', borderTopWidth: 1 }} pressOpacity={1}>
             <Scene key="tab1" title="Feed" icon={FeedIcon} initial>
               <Scene key="feed" component={Feed} title="RapX" />
             </Scene>
