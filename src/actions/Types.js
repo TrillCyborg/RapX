@@ -9,6 +9,7 @@ const user = {
   setProfilePicUrl: 'SET_PROFILE_PIC_URL',
   setUid: 'SET_UID',
   setName: 'SET_NAME',
+  setBio: 'SET_BIO',
 };
 
 const app = {
@@ -21,6 +22,7 @@ const temp = {
   resetTempUser: 'RESET_TEMP_USER',
   setTempName: 'SET_TEMP_NAME',
   setTempUsername: 'SET_TEMP_USERNAME',
+  setTempBio: 'SET_TEMP_BIO',
   setTempProfilePicUrl: 'SET_TEMP_PROFILE_PIC_URL',
 };
 
