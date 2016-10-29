@@ -3,6 +3,7 @@ import { user as userTypes } from '../actions/Types';
 const initUserState = {
   uid: '',
   name: '',
+  bio: '',
   username: '',
   picUrl: '',
   fbAccessToken: '',
@@ -19,6 +20,11 @@ export default function User(state = initUserState, action) {
       return {
         ...state,
         name: action.value,
+      };
+    case userTypes.setBio:
+      return {
+        ...state,
+        bio: action.value,
       };
     case userTypes.setUsername:
       return {
