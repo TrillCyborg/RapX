@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
-import { getUserMedia } from 'react-native-webrtc';
+import { getUserMedia, RTCView } from 'react-native-webrtc';
 import ScreenContainer from './ScreenContainer';
 import { Button } from './Input';
 
@@ -30,6 +30,7 @@ class Battle extends Component {
       <ScreenContainer center>
         <Text>Battle</Text>
         <Button onPress={this.getLocalStream}>Start Stream</Button>
+        <RTCView streamURL={this.state.streamURL} />
       </ScreenContainer>
     );
   }
