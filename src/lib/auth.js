@@ -9,6 +9,7 @@ import {
   setProfilePicUrl,
   setUid,
   setName,
+  setBio,
 } from '../actions';
 
 const getCurrentUser = () => firebase.auth().currentUser;
@@ -34,7 +35,9 @@ const initLogin = (callback) => {
             if (isRegistered) {
               getUserOnce(user.uid)
                 .then((snapshot) => {
+                  Store.dispatch(setBio(snapshot.val().bio));
                   const unsubscribeStore = Store.subscribe(() => {
+                    // Only call on last dispatch
                     unsubscribeStore();
                     callback();
                   });
