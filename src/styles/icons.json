@@ -12,5 +12,6 @@
   "userIcons": {
     "nameIcon": "ios-contact-outline",
     "usernameIcon": "ios-at-outline",
+    "bioIcon": "ios-paper-outline",
   },
 }

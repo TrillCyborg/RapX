@@ -8,8 +8,10 @@ import {
   setUsername,
   setProfilePicUrl,
   setName,
+  setBio,
   setTempUsername,
   setTempName,
+  setTempBio,
   setTempProfilePicUrl,
   resetTempUser,
   toggleLoggedIn,
@@ -31,6 +33,7 @@ class Settings extends Component {
   componentWillMount() {
     this.props.setTempUsername(this.props.user.username);
     this.props.setTempName(this.props.user.name);
+    this.props.setTempBio(this.props.user.bio);
     this.props.setTempProfilePicUrl(this.props.user.picUrl);
   }
 
@@ -62,16 +65,19 @@ class Settings extends Component {
             picUrl,
             username: this.props.temp.username,
             name: this.props.temp.name,
+            bio: this.props.temp.bio,
           });
         });
     } else {
       promise = updateUser(this.props.user.uid, {
         username: this.props.temp.username,
         name: this.props.temp.name,
+        bio: this.props.temp.bio,
       });
     }
     promise.then(() => {
       this.props.setUsername(this.props.temp.username);
+      this.props.setBio(this.props.temp.bio);
       this.props.setName(this.props.temp.name);
       this.props.setProfilePicUrl(this.props.temp.picUrl);
     })
@@ -83,8 +89,9 @@ class Settings extends Component {
   render() {
     const noChanges = (this.props.user.name === this.props.temp.name)
       && (this.props.user.username === this.props.temp.username)
+      && (this.props.user.bio === this.props.temp.bio)
       && !this.state.changedImage;
-    const { nameIcon, usernameIcon } = userIcons;
+    const { nameIcon, usernameIcon, bioIcon } = userIcons;
     return (
       <ScreenContainer center>
         <ProfilePicInput
@@ -102,6 +109,12 @@ class Settings extends Component {
           value={this.props.temp.username}
           iconName={usernameIcon}
           placeholder="Username"
+        />
+        <IconTextInput
+          onChangeText={bio => this.props.setTempBio(bio)}
+          value={this.props.temp.bio}
+          iconName={bioIcon}
+          placeholder="Bio"
         />
         <Button
           style={styles.margin}
@@ -124,17 +137,21 @@ Settings.propTypes = {
     username: PropTypes.string.isRequired,
     picUrl: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    bio: PropTypes.string.isRequired,
     uid: PropTypes.string.isRequired,
   }),
   temp: PropTypes.shape({
     username: PropTypes.string.isRequired,
     picUrl: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    bio: PropTypes.string.isRequired,
   }),
   setUsername: PropTypes.func.isRequired,
+  setBio: PropTypes.func.isRequired,
   setName: PropTypes.func.isRequired,
   setProfilePicUrl: PropTypes.func.isRequired,
   setTempUsername: PropTypes.func.isRequired,
+  setTempBio: PropTypes.func.isRequired,
   setTempName: PropTypes.func.isRequired,
   setTempProfilePicUrl: PropTypes.func.isRequired,
   resetTempUser: PropTypes.func.isRequired,
@@ -156,9 +173,11 @@ const styles = {
 export default connect(mapStateToProps, {
   setUsername,
   setName,
+  setBio,
   setProfilePicUrl,
   setTempUsername,
   setTempName,
+  setTempBio,
   setTempProfilePicUrl,
   resetTempUser,
   toggleLoggedIn,
