@@ -1,16 +1,19 @@
 import React, { PropTypes } from 'react';
-import { View, Text } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-const ProfileInfo = ({ num, text }) => (
-  <View style={styles.viewStyle}>
-    <Text style={styles.numStyle}>{num}</Text>
-    <Text style={styles.textStyle}>{text}</Text>
-  </View>
+const ProfileInfo = ({ num, text, onPress }) => (
+  <TouchableOpacity onPress={onPress}>
+    <View style={styles.viewStyle}>
+      <Text style={styles.numStyle}>{num}</Text>
+      <Text style={styles.textStyle}>{text}</Text>
+    </View>
+  </TouchableOpacity>
 );
 
 ProfileInfo.propTypes = {
   num: PropTypes.number,
-  text: PropTypes.string,
+  text: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 const styles = {

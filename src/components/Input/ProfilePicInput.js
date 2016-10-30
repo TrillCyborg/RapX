@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Text, View, Image, TouchableHighlight } from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 
 const defaultProfilePicUrl = 'https://facebook.github.io/react/img/logo_og.png'; // TODO get a default pic
@@ -20,9 +20,9 @@ const ProfilePicInput = ({ picUrl, onPressSet }) => {
         source={{ uri: picUrl || defaultProfilePicUrl }}
       />
 
-      <TouchableHighlight onPress={openImagePicker}>
+      <TouchableOpacity onPress={openImagePicker}>
         <Text style={styles.textLinkStyle}>Edit Profile Picture</Text>
-      </TouchableHighlight>
+      </TouchableOpacity>
     </View>
   );
 };

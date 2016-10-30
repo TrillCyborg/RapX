@@ -1,39 +1,64 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Image, View } from 'react-native';
+import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 import ProfileInfo from './ProfileInfo';
+import {
+  setFollowsTitle,
+} from '../actions';
 
-const ProfileTop = ({ image, postAmount, followersAmount, followingAmount }) => (
-  <View style={{ marginTop: 10 }}>
-    <View style={styles.viewStyle}>
-      <Image
-        style={styles.profilePicStyle}
-        source={{ uri: image }}
-      />
-      <View style={{ alignItems: 'center' }}>
+class ProfileTop extends Component {
+  constructor(props) {
+    super(props);
+    this.handleFollowsPress = this.handleFollowsPress.bind(this);
+  }
+
+  handleFollowsPress(title) {
+    this.props.setFollowsTitle(title);
+    Actions.follows();
+  }
+
+  render() {
+    return (
+      <View style={{ marginTop: 10 }}>
         <View style={styles.viewStyle}>
-          <ProfileInfo num={postAmount} text="posts" />
-          <ProfileInfo num={followersAmount} text="followers" />
-          <ProfileInfo num={followingAmount} text="following" />
+          <Image
+            style={styles.profilePicStyle}
+            source={{ uri: this.props.image }}
+          />
+          <View style={{ alignItems: 'center' }}>
+            <View style={styles.viewStyle}>
+              <ProfileInfo num={this.props.postAmount} text="posts" onPress={() => console.log('posts')} />
+              <ProfileInfo num={this.props.followersAmount} text="followers" onPress={() => this.handleFollowsPress('Followers')} />
+              <ProfileInfo num={this.props.followingAmount} text="following" onPress={() => this.handleFollowsPress('Following')} />
+            </View>
+            <Button
+              title="Edit Profile"
+              buttonStyle={styles.buttonStyle}
+              onPress={this.saveChanges}
+              color="#000"
+              small
+            />
+          </View>
         </View>
-        <Button
-          title="Edit Profile"
-          buttonStyle={styles.buttonStyle}
-          onPress={this.saveChanges}
-          color="#000"
-          small
-        />
       </View>
-    </View>
-  </View>
-);
+    );
+  }
+}
 
 ProfileTop.propTypes = {
   image: PropTypes.string,
   postAmount: PropTypes.number,
   followersAmount: PropTypes.number,
   followingAmount: PropTypes.number,
+  setFollowsTitle: PropTypes.func.isRequired,
 };
+
+// const mapStateToProps = state => ({
+//   user: state.user,
+//   temp: state.temp.user,
+// });
 
 const styles = {
   viewStyle: {
@@ -57,4 +82,4 @@ const styles = {
   },
 };
 
-export default ProfileTop;
+export default connect(null, { setFollowsTitle })(ProfileTop);

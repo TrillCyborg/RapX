@@ -13,6 +13,7 @@ import Battle from './components/Battle';
 import Activity from './components/Activity';
 import Profile from './components/Profile';
 import Settings from './components/Settings';
+import Follows from './components/Follows';
 import Register from './components/Register';
 
 class Routes extends Component {
@@ -45,6 +46,7 @@ class Routes extends Component {
                 renderRightButton={SettingsButton}
               />
               <Scene key="settings" component={Settings} title="Settings" />
+              <Scene key="follows" component={Follows} title="Follows" />
             </Scene>
           </Scene>
           <Scene key="modal" title="Modal" component={Modal} direction="vertical" hideNavBar />
