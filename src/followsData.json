@@ -1,0 +1,40 @@
+{
+  "users" : [
+    {
+      "name": "Dr. Dre",
+      "picUrl": "https://facebook.github.io/react/img/logo_og.png",
+    },
+    {
+      "name": "2Pac",
+      "picUrl": "https://facebook.github.io/react/img/logo_og.png",
+    },
+    {
+      "name": "Eminem",
+      "picUrl": "https://facebook.github.io/react/img/logo_og.png",
+    },
+    {
+      "name": "Kendrick Lamar",
+      "picUrl": "https://facebook.github.io/react/img/logo_og.png",
+    },
+    {
+      "name": "50 Cent",
+      "picUrl": "https://facebook.github.io/react/img/logo_og.png",
+    },
+    {
+      "name": "Big L",
+      "picUrl": "https://facebook.github.io/react/img/logo_og.png",
+    },
+    {
+      "name": "Chance the Rapper",
+      "picUrl": "https://facebook.github.io/react/img/logo_og.png",
+    },
+    {
+      "name": "Rapsody",
+      "picUrl": "https://facebook.github.io/react/img/logo_og.png",
+    },
+    {
+      "name": "Kanye West",
+      "picUrl": "https://facebook.github.io/react/img/logo_og.png",
+    },
+  ],
+}
