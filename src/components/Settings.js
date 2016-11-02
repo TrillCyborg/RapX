@@ -4,7 +4,7 @@ import { Button } from 'react-native-elements';
 
 import { IconTextInput, ProfilePicInput } from './Input';
 import ScreenContainer from './ScreenContainer';
-import FacebookLogoutButton from './FacebookLogoutButton';
+import LogoutButton from './LogoutButton';
 import {
   setUsername,
   setProfilePicUrl,
@@ -104,7 +104,7 @@ class Settings extends Component {
           small
           raised
         />
-        <FacebookLogoutButton />
+        <LogoutButton />
       </ScreenContainer>
     );
   }
