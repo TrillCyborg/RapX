@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { navBarIcons } from '../../styles/icons.json';
 
 const SettingsButton = () => (
-  <TouchableOpacity onPress={() => Actions.settings()}>
+  <TouchableOpacity onPress={Actions.settings}>
     <Icon
       name={navBarIcons.settingsIcon}
       size={25}

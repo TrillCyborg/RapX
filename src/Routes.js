@@ -13,6 +13,7 @@ import Battle from './components/Battle';
 import Activity from './components/Activity';
 import Profile from './components/Profile';
 import Settings from './components/Settings';
+import Follows from './components/Follows';
 import Register from './components/Register';
 
 class Routes extends Component {
@@ -24,7 +25,7 @@ class Routes extends Component {
             <Scene key="login" component={Login} title="Login" initial={!this.props.loggedIn} hideNavBar />
             <Scene key="register" component={Register} title="Register" initial={this.props.loggedIn && !this.props.registered} hideNavBar panHandlers={null} />
           </Scene>
-          <Scene key="main" tabs initial={this.props.loggedIn && this.props.registered} tabBarStyle={{ borderColor: '#000', borderTopWidth: 1 }} pressOpacity={1}>
+          <Scene key="main" tabs initial={this.props.loggedIn && this.props.registered} tabBarStyle={{ borderColor: '#ddd', borderTopWidth: 1 }} pressOpacity={1}>
             <Scene key="tab1" title="Feed" icon={FeedIcon} initial>
               <Scene key="feed" component={Feed} title="RapX" />
             </Scene>
@@ -45,6 +46,7 @@ class Routes extends Component {
                 renderRightButton={SettingsButton}
               />
               <Scene key="settings" component={Settings} title="Settings" />
+              <Scene key="follows" component={Follows} title="Follows" />
             </Scene>
           </Scene>
           <Scene key="modal" title="Modal" component={Modal} direction="vertical" hideNavBar />

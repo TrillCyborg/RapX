@@ -15,6 +15,7 @@ const user = {
 const app = {
   toggleLoggedIn: 'TOGGLE_LOGGED_IN',
   setRegistered: 'SET_REGISTERED',
+  setFollowsTitle: 'SET_FOLLOWS_TITLE',
 };
 
 const temp = {

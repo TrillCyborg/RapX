@@ -54,7 +54,7 @@ const ProfileIcon = ({ selected }) => (
 
 const styles = {
   activeColor: '#673AB7',
-  inactiveColor: '#000',
+  inactiveColor: '#555',
   iconSize: 30,
 };
 
