@@ -3,7 +3,6 @@ import { app as appTypes } from '../actions/Types';
 const initAppState = {
   loggedIn: false,
   registered: null,
-  followsTitle: '',
 };
 
 export default function App(state = initAppState, action) {
@@ -17,11 +16,6 @@ export default function App(state = initAppState, action) {
       return {
         ...state,
         registered: action.value,
-      };
-    case appTypes.setFollowsTitle:
-      return {
-        ...state,
-        followsTitle: action.value,
       };
     default:
       return state;

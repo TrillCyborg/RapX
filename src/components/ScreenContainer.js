@@ -21,11 +21,11 @@ ScreenContainer.propTypes = {
 const styles = {
   container: {
     flex: 1,
-    marginTop: 70,
+    marginTop: 65,
   },
   containerCenter: {
     flex: 1,
-    marginTop: 70,
+    marginTop: 65,
     justifyContent: 'flex-start', // vertical
     alignItems: 'center', // horizontal
   },

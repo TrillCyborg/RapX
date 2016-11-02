@@ -29,7 +29,7 @@ class Follows extends Component {
     return (
       <ScreenContainer>
         <ScrollView>
-          <List containerStyle={{ borderTopWidth: 0, marginTop: 0, marginBottom: 20, alignSelf: 'stretch' }}>
+          <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0, marginTop: 0, marginBottom: 20, alignSelf: 'stretch' }}>
             {
               <ListView
                 renderRow={this.renderRow}

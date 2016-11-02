@@ -1,24 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { Image, View } from 'react-native';
-import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import ProfileInfo from './ProfileInfo';
-import {
-  setFollowsTitle,
-} from '../actions';
 
 class ProfileTop extends Component {
-  constructor(props) {
-    super(props);
-    this.handleFollowsPress = this.handleFollowsPress.bind(this);
-  }
-
-  handleFollowsPress(title) {
-    this.props.setFollowsTitle(title);
-    Actions.follows();
-  }
-
   render() {
     return (
       <View style={{ marginTop: 10 }}>
@@ -30,8 +16,8 @@ class ProfileTop extends Component {
           <View style={{ alignItems: 'center' }}>
             <View style={styles.viewStyle}>
               <ProfileInfo num={this.props.postAmount} text="posts" onPress={() => console.log('posts')} />
-              <ProfileInfo num={this.props.followersAmount} text="followers" onPress={() => this.handleFollowsPress('Followers')} />
-              <ProfileInfo num={this.props.followingAmount} text="following" onPress={() => this.handleFollowsPress('Following')} />
+              <ProfileInfo num={this.props.followersAmount} text="followers" onPress={() => Actions.followers()} />
+              <ProfileInfo num={this.props.followingAmount} text="following" onPress={() => Actions.following()} />
             </View>
             <Button
               title="Edit Profile"
@@ -52,13 +38,7 @@ ProfileTop.propTypes = {
   postAmount: PropTypes.number,
   followersAmount: PropTypes.number,
   followingAmount: PropTypes.number,
-  setFollowsTitle: PropTypes.func.isRequired,
 };
-
-// const mapStateToProps = state => ({
-//   user: state.user,
-//   temp: state.temp.user,
-// });
 
 const styles = {
   viewStyle: {
@@ -82,4 +62,4 @@ const styles = {
   },
 };
 
-export default connect(null, { setFollowsTitle })(ProfileTop);
+export default ProfileTop;

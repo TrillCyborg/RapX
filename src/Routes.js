@@ -46,7 +46,8 @@ class Routes extends Component {
                 renderRightButton={SettingsButton}
               />
               <Scene key="settings" component={Settings} title="Settings" />
-              <Scene key="follows" component={Follows} title="Follows" />
+              <Scene key="followers" component={Follows} title="Followers" />
+              <Scene key="following" component={Follows} title="Following" />
             </Scene>
           </Scene>
           <Scene key="modal" title="Modal" component={Modal} direction="vertical" hideNavBar />
