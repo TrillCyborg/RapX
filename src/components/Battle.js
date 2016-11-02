@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   Text,
-  TouchableHighlight,
   View,
   TextInput,
   ListView,
@@ -11,14 +10,13 @@ import {
   RTCIceCandidate,
   RTCSessionDescription,
   RTCView,
-  MediaStreamTrack,
   getUserMedia,
 } from 'react-native-webrtc';
 import io from 'socket.io-client/socket.io';
-// import ScreenContainer from './ScreenContainer';
-// import { Button } from './Input';
+import ScreenContainer from './ScreenContainer';
+import { Button } from './Input';
 
-const socket = io.connect('https://react-native-webrtc.herokuapp.com', { transports: ['websocket'] });
+let socket;
 const configuration = { iceServers: [{ url: 'stun:stun.l.google.com:19302' }] };
 const pcPeers = {};
 let localStream;
@@ -27,6 +25,7 @@ function logError(error) {
   console.log('logError', error);
 }
 
+// Join a room with roomID
 function join(roomID) {
   socket.emit('join', roomID, (socketIds) => {
     console.log('join', socketIds);
@@ -36,32 +35,13 @@ function join(roomID) {
   });
 }
 
-function getLocalStream(isFront, callback) {
-  MediaStreamTrack.getSources((sourceInfos) => {
-    console.log(sourceInfos);
-    let videoSourceId;
-    for (let i = 0; i < sourceInfos.length; i += 1) {
-      const sourceInfo = sourceInfos[i];
-      if (sourceInfo.kind === 'video' && sourceInfo.facing === (isFront ? 'front' : 'back')) {
-        videoSourceId = sourceInfo.id;
-      }
-    }
-    getUserMedia({
-      audio: true,
-      video: {
-        optional: [{ sourceId: videoSourceId }],
-      },
-    }, (stream) => {
-      console.log('dddd', stream);
-      callback(stream);
-    }, logError);
-  });
-}
-
+// Create a peer connection for each socketId in the room
 function createPC(socketId, isOffer) {
   function createOffer() {
+    // Request or update connection with other peer(s)
     pc.createOffer((desc) => {
       console.log('createOffer', desc);
+      // Set data about local peer connection and media
       pc.setLocalDescription(desc, () => {
         console.log('setLocalDescription', pc.localDescription);
         socket.emit('exchange', { to: socketId, sdp: pc.localDescription });
@@ -72,6 +52,7 @@ function createPC(socketId, isOffer) {
   const pc = new RTCPeerConnection(configuration);
   pcPeers[socketId] = pc;
 
+  // Local ICE agent needs to deliver message to another peer
   pc.onicecandidate = (event) => {
     console.log('onicecandidate', event.candidate);
     if (event.candidate) {
@@ -79,6 +60,7 @@ function createPC(socketId, isOffer) {
     }
   };
 
+  // Change occured which requires session negotiation
   pc.onnegotiationneeded = () => {
     console.log('onnegotiationneeded');
     if (isOffer) {
@@ -86,21 +68,23 @@ function createPC(socketId, isOffer) {
     }
   };
 
+  // Handle connections ICE agent change
   pc.oniceconnectionstatechange = (event) => {
     console.log('oniceconnectionstatechange', event.target.iceConnectionState);
     if (event.target.iceConnectionState === 'completed') {
       setTimeout(() => {
         getStats();
       }, 1000);
-    } else if (event.target.iceConnectionState === 'completed') {
       createDataChannel();
     }
   };
 
+  // Handle signal state change caused by setLocalDescription or setRemoteDescription
   pc.onsignalingstatechange = (event) => {
     console.log('onsignalingstatechange', event.target.signalingState);
   };
 
+  // Hanle remote peer adding media stream to this current connection
   pc.onaddstream = (event) => {
     console.log('onaddstream', event.stream);
     container.setState({ info: 'One peer join!' });
@@ -110,16 +94,20 @@ function createPC(socketId, isOffer) {
     container.setState({ remoteList });
   };
 
+  // Hanlde media stream being removed from this current connection
   pc.onremovestream = (event) => {
     console.log('onremovestream', event.stream);
   };
 
+  // Add media stream as a local source of audio
   pc.addStream(localStream);
 
+  // Create data channel for peers to exchange data
   function createDataChannel() {
     if (pc.textDataChannel) {
       return;
     }
+    // Create a data channel called text
     const dataChannel = pc.createDataChannel('text');
 
     dataChannel.onerror = (error) => {
@@ -142,6 +130,7 @@ function createPC(socketId, isOffer) {
 
     pc.textDataChannel = dataChannel;
   }
+
   return pc;
 }
 
@@ -156,10 +145,13 @@ function exchange(data) {
 
   if (data.sdp) {
     console.log('exchange sdp', data);
+    // Set data about remote peer connection and media
     pc.setRemoteDescription(new RTCSessionDescription(data.sdp), () => {
       if (pc.remoteDescription.type === 'offer') {
+        // Answer remote peers offer
         pc.createAnswer((desc) => {
           console.log('createAnswer', desc);
+          // Set data about local peer connection and media
           pc.setLocalDescription(desc, () => {
             console.log('setLocalDescription', pc.localDescription);
             socket.emit('exchange', { to: fromId, sdp: pc.localDescription });
@@ -169,6 +161,7 @@ function exchange(data) {
     }, logError);
   } else {
     console.log('exchange candidate', data);
+    // Add new candid to ICE agent
     pc.addIceCandidate(new RTCIceCandidate(data.candidate));
   }
 }
@@ -188,19 +181,6 @@ function leave(socketId) {
   }
 }
 
-socket.on('exchange', exchange);
-
-socket.on('connect', leave);
-
-socket.on('connect', (/* data */) => {
-  console.log('connect');
-  getLocalStream(true, (stream) => {
-    localStream = stream;
-    container.setState({ selfViewSrc: stream.toURL() });
-    container.setState({ status: 'ready', info: 'Please enter or create room ID' });
-  });
-});
-
 function mapHash(hash, func) {
   const array = [];
   for (const key in hash) {
@@ -211,9 +191,11 @@ function mapHash(hash, func) {
 
 function getStats() {
   const pc = pcPeers[Object.keys(pcPeers)[0]];
+  // Get audio tracks of other peer(s)
   if (pc.getRemoteStreams()[0] && pc.getRemoteStreams()[0].getAudioTracks()[0]) {
     const track = pc.getRemoteStreams()[0].getAudioTracks()[0];
     console.log('track', track);
+    //
     pc.getStats(track, (report) => {
       console.log('getStats report', report);
     }, logError);
@@ -221,7 +203,6 @@ function getStats() {
 }
 
 let container;
-
 
 class Battle extends Component {
   constructor() {
@@ -231,49 +212,48 @@ class Battle extends Component {
       info: 'Initializing',
       status: 'init',
       roomID: '',
-      isFront: true,
       selfViewSrc: null,
       remoteList: {},
       textRoomConnected: false,
       textRoomData: [],
       textRoomValue: '',
     };
-    this._press = this._press.bind(this);
-    this._switchVideoType = this._switchVideoType.bind(this);
+    this.getLocalStream = this.getLocalStream.bind(this);
+    this.onPressEnterRoom = this.onPressEnterRoom.bind(this);
     this.receiveTextData = this.receiveTextData.bind(this);
-    this._textRoomPress = this._textRoomPress.bind(this);
-    this._renderTextRoom = this._renderTextRoom.bind(this);
+    this.textRoomPress = this.textRoomPress.bind(this);
+    this.renderTextRoom = this.renderTextRoom.bind(this);
+  }
+
+  componentWillMount() {
+    socket = io.connect('https://webrtc-signal-test-server.herokuapp.com/', { transports: ['websocket'] });
   }
 
   componentDidMount() {
     container = this;
+    socket.on('exchange', exchange);
+    socket.on('leave', leave);
+    socket.on('connect', (/* data */) => {
+      console.log('connect');
+      this.getLocalStream();
+    });
   }
 
-  _press(/* event */) {
+  onPressEnterRoom(/* event */) {
     this.refs.roomID.blur();
     this.setState({ status: 'connect', info: 'Connecting' });
     join(this.state.roomID);
   }
 
-  _switchVideoType() {
-    const isFront = !this.state.isFront;
-    this.setState({ isFront });
-    getLocalStream(isFront, (stream) => {
-      if (localStream) {
-        for (const id in pcPeers) {
-          const pc = pcPeers[id];
-          pc && pc.removeStream(localStream);
-        }
-        localStream.release();
-      }
+  getLocalStream() {
+    getUserMedia({
+      audio: true,
+      video: false,
+    }, (stream) => {
       localStream = stream;
-      container.setState({ selfViewSrc: stream.toURL() });
-
-      for (const id in pcPeers) {
-        const pc = pcPeers[id];
-        pc && pc.addStream(localStream);
-      }
-    });
+      this.setState({ selfViewSrc: stream.toURL() });
+      this.setState({ status: 'ready', info: 'Please enter or create room ID' });
+    }, logError);
   }
 
   receiveTextData(data) {
@@ -282,7 +262,7 @@ class Battle extends Component {
     this.setState({ textRoomData, textRoomValue: '' });
   }
 
-  _textRoomPress() {
+  textRoomPress() {
     if (!this.state.textRoomValue) {
       return;
     }
@@ -295,7 +275,7 @@ class Battle extends Component {
     this.setState({ textRoomData, textRoomValue: '' });
   }
 
-  _renderTextRoom() {
+  renderTextRoom() {
     return (
       <View style={styles.listViewContainer}>
         <ListView
@@ -307,52 +287,46 @@ class Battle extends Component {
           onChangeText={value => this.setState({ textRoomValue: value })}
           value={this.state.textRoomValue}
         />
-        <TouchableHighlight
-          onPress={this._textRoomPress}>
-          <Text>Send</Text>
-        </TouchableHighlight>
+        <Button onPress={this.textRoomPress}>
+          Send
+        </Button>
       </View>
     );
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          {this.state.info}
-        </Text>
-        {this.state.textRoomConnected && this._renderTextRoom()}
-        <View style={{ flexDirection: 'row' }}>
-          <Text>
-            {this.state.isFront ? 'Use front camera' : 'Use back camera'}
+      <ScreenContainer>
+        <View>
+          <Text style={styles.welcome}>
+            {this.state.info}
           </Text>
-          <TouchableHighlight
-            style={{ borderWidth: 1, borderColor: 'black' }}
-            onPress={this._switchVideoType}>
-            <Text>Switch camera</Text>
-          </TouchableHighlight>
+          {this.state.textRoomConnected && this.renderTextRoom()}
+          { this.state.status === 'ready' ?
+            (<View>
+              <TextInput
+                ref="roomID"
+                autoCorrect={false}
+                style={{ width: 200, height: 40, borderColor: 'gray', borderWidth: 1 }}
+                onChangeText={text => this.setState({ roomID: text })}
+                value={this.state.roomID}
+              />
+              <Button onPress={this.onPressEnterRoom}>
+                Enter room
+              </Button>
+            </View>) : null
+          }
+          <RTCView streamURL={this.state.selfViewSrc} style={styles.selfView} />
+          {
+            mapHash(this.state.remoteList, (remote, index) => (
+              <RTCView
+                key={index}
+                streamURL={remote}
+                style={styles.remoteView}
+              />))
+          }
         </View>
-        { this.state.status === 'ready' ?
-          (<View>
-            <TextInput
-              ref="roomID"
-              autoCorrect={false}
-              style={{ width: 200, height: 40, borderColor: 'gray', borderWidth: 1 }}
-              onChangeText={text => this.setState({ roomID: text })}
-              value={this.state.roomID}
-            />
-            <TouchableHighlight
-              onPress={this._press}>
-              <Text>Enter room</Text>
-            </TouchableHighlight>
-          </View>) : null
-        }
-        <RTCView streamURL={this.state.selfViewSrc} style={styles.selfView} />
-        {
-          mapHash(this.state.remoteList,
-            (remote, index) => <RTCView key={index} streamURL={remote} style={styles.remoteView} />)
-        }
-      </View>
+      </ScreenContainer>
     );
   }
 }
@@ -366,11 +340,6 @@ const styles = {
     width: 200,
     height: 150,
   },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
-  },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
@@ -380,15 +349,5 @@ const styles = {
     height: 150,
   },
 };
-
-// render() {
-//   return (
-//     <ScreenContainer center>
-//       <Text>Battle</Text>
-//       <Button onPress={this.getLocalStream}>Start Stream</Button>
-//       <RTCView streamURL={this.state.streamURL} />
-//     </ScreenContainer>
-//   );
-// }
 
 export default Battle;
