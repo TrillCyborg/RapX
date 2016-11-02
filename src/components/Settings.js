@@ -1,11 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
 import { Button } from 'react-native-elements';
 
 import { IconTextInput, ProfilePicInput } from './Input';
 import ScreenContainer from './ScreenContainer';
-import FacebookLoginButton from './FacebookLoginButton';
+import FacebookLogoutButton from './FacebookLogoutButton';
 import {
   setUsername,
   setProfilePicUrl,
@@ -14,10 +13,8 @@ import {
   setTempName,
   setTempProfilePicUrl,
   resetTempUser,
-  toggleLoggedIn,
 } from '../actions';
 import { userIcons } from '../styles/icons.json';
-import { signOut } from '../lib/auth';
 import { updateUser } from '../lib/users';
 import { setProfilePic } from '../lib/storage';
 
@@ -27,7 +24,6 @@ class Settings extends Component {
     this.state = { mime: '', changedImage: false };
     this.selectProfilePic = this.selectProfilePic.bind(this);
     this.saveChanges = this.saveChanges.bind(this);
-    this.onLogoutFinished = this.onLogoutFinished.bind(this);
   }
 
   componentWillMount() {
@@ -38,12 +34,6 @@ class Settings extends Component {
 
   componentWillUnmount() {
     this.props.resetTempUser();
-  }
-
-  onLogoutFinished() {
-    this.props.toggleLoggedIn();
-    // TODO reset all state
-    signOut().then(() => Actions.welcome({ type: 'reset' }));
   }
 
   selectProfilePic({ path, mime }) {
@@ -114,11 +104,7 @@ class Settings extends Component {
           small
           raised
         />
-        <FacebookLoginButton
-          style={{ justifyContent: 'flex-end' }}
-          onLoginFinished={() => {}}
-          onLogoutFinished={this.onLogoutFinished}
-        />
+        <FacebookLogoutButton />
       </ScreenContainer>
     );
   }
@@ -143,7 +129,6 @@ Settings.propTypes = {
   setTempName: PropTypes.func.isRequired,
   setTempProfilePicUrl: PropTypes.func.isRequired,
   resetTempUser: PropTypes.func.isRequired,
-  toggleLoggedIn: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -166,5 +151,4 @@ export default connect(mapStateToProps, {
   setTempName,
   setTempProfilePicUrl,
   resetTempUser,
-  toggleLoggedIn,
 })(Settings);

@@ -1,17 +1,47 @@
-import React, { PropTypes } from 'react';
-import { LoginButton } from 'react-native-fbsdk';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+import { LoginManager } from 'react-native-fbsdk';
+import { Button } from './Input';
+import { signIn } from '../lib/auth';
 
-const FacebookLoginButton = ({ onLoginFinished, onLogoutFinished }) => (
-  <LoginButton
-    readPermissions={['public_profile', 'email', 'user_friends']}
-    onLoginFinished={onLoginFinished}
-    onLogoutFinished={onLogoutFinished}
-  />
-);
+class FacebookLoginButton extends Component {
+  constructor() {
+    super();
+    this.login = this.login.bind(this);
+  }
+
+  login() {
+    LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends']).then((result) => {
+      if (result.isCancelled) {
+        console.log('Login was cancelled');
+      } else {
+        console.log('Login was successful with permissions:', result);
+        signIn(() => {
+          if (this.props.isRegistered) {
+            Actions.main({ type: 'reset' });
+          } else {
+            Actions.register();
+          }
+        });
+      }
+    }
+    ).catch((error) => {
+      console.log('Login Error:', error);
+    });
+  }
+
+  render() {
+    return <Button onPress={this.login}>Login with Facebook</Button>;
+  }
+}
 
 FacebookLoginButton.propTypes = {
-  onLoginFinished: PropTypes.func.isRequired,
-  onLogoutFinished: PropTypes.func.isRequired,
+  isRegistered: PropTypes.bool,
 };
 
-export default FacebookLoginButton;
+const mapStateToProps = state => ({
+  isRegistered: state.app.registered,
+});
+
+export default connect(mapStateToProps)(FacebookLoginButton);
