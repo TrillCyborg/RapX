@@ -1,50 +1,46 @@
-import React, { PropTypes } from 'react';
-import { View, Text, Image, ListView } from 'react-native';
+import React, { Component } from 'react';
+import { List, ListItem } from 'react-native-elements';
+import { ListView, ScrollView } from 'react-native';
 import ScreenContainer from './ScreenContainer';
 import followsData from '../followsData.json';
 
-const Follows = ({ users = followsData.users }) => (
-  <ScreenContainer center>
-    <ListView
-      dataSource={ds.cloneWithRows(users)}
-      renderRow={rowData =>
-        <View style={styles.userBarStyle}>
-          <Image style={styles.userPicStyle} source={{ uri: rowData.picUrl }} />
-          <Text style={styles.textStyle}>{rowData.name}</Text>
-        </View>
-      }
-      style={styles.listStyle}
-    />
-  </ScreenContainer>
-);
+class Follows extends Component {
+  constructor() {
+    super();
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    this.state = {
+      dataSource: ds.cloneWithRows(followsData.users),
+    };
+  }
 
-const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+  renderRow(rowData, sectionID) {
+    return (
+      <ListItem
+        roundAvatar
+        key={sectionID}
+        title={rowData.name}
+        subtitle={`@${rowData.username}`}
+        avatar={{ uri: rowData.picUrl }}
+      />
+    );
+  }
 
-Follows.propTypes = {
-  users: PropTypes.array,
-};
-
-const styles = {
-  userBarStyle: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 5,
-    borderBottomWidth: 1,
-    borderColor: '#eee',
-  },
-  listStyle: {
-    alignSelf: 'stretch',
-  },
-  textStyle: {
-    justifyContent: 'center',
-    padding: 5,
-  },
-  userPicStyle: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-  },
-};
+  render() {
+    return (
+      <ScreenContainer>
+        <ScrollView>
+          <List containerStyle={{ borderTopWidth: 0, marginTop: 0, marginBottom: 20, alignSelf: 'stretch' }}>
+            {
+              <ListView
+                renderRow={this.renderRow}
+                dataSource={this.state.dataSource}
+              />
+            }
+          </List>
+        </ScrollView>
+      </ScreenContainer>
+    );
+  }
+}
 
 export default Follows;
