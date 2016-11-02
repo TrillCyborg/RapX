@@ -3,6 +3,7 @@ import { app as appTypes } from '../actions/Types';
 const initAppState = {
   loggedIn: false,
   registered: null,
+  battleConnectionInfo: '',
 };
 
 export default function App(state = initAppState, action) {
@@ -16,6 +17,11 @@ export default function App(state = initAppState, action) {
       return {
         ...state,
         registered: action.value,
+      };
+    case appTypes.setBattleConnectionInfo:
+      return {
+        ...state,
+        battleConnectionInfo: action.value,
       };
     default:
       return state;
