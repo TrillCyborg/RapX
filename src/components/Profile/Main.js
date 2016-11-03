@@ -1,5 +1,5 @@
 import React from 'react';
-import ScreenContainer from './ScreenContainer';
+import ScreenContainer from '../ScreenContainer';
 import ProfileTop from './ProfileTop';
 
 const defaultProfilePicUrl = 'https://facebook.github.io/react/img/logo_og.png'; // TODO get a default pic

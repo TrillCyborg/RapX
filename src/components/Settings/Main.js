@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
 
-import { IconTextInput, ProfilePicInput } from './Input';
-import ScreenContainer from './ScreenContainer';
+import { IconTextInput, ProfilePicInput } from '../Input';
+import ScreenContainer from '../ScreenContainer';
 import LogoutButton from './LogoutButton';
 import {
   setUsername,
@@ -15,10 +15,10 @@ import {
   setTempBio,
   setTempProfilePicUrl,
   resetTempUser,
-} from '../actions';
-import { userIcons } from '../styles/icons.json';
-import { updateUser } from '../lib/users';
-import { setProfilePic } from '../lib/storage';
+} from '../../actions';
+import { userIcons } from '../../styles/icons.json';
+import { updateUser } from '../../lib/users';
+import { setProfilePic } from '../../lib/storage';
 
 class Settings extends Component {
   constructor(props) {

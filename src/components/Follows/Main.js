@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { List, ListItem } from 'react-native-elements';
 import { ListView, ScrollView } from 'react-native';
-import ScreenContainer from './ScreenContainer';
-import followsData from '../followsData.json';
+import ScreenContainer from '../ScreenContainer';
+import followsData from './followsData.json';
 
 class Follows extends Component {
   constructor() {

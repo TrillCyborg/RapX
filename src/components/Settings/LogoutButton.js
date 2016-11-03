@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { LoginManager } from 'react-native-fbsdk';
-import { Button } from './Input';
-import { signOut } from '../lib/auth';
-import { toggleLoggedIn } from '../actions';
+import { Button } from '../Input';
+import { signOut } from '../../lib/auth';
+import { toggleLoggedIn } from '../../actions';
 
 class LogoutButton extends Component {
   constructor(props) {

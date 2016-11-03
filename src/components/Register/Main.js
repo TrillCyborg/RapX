@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { setUsername, setProfilePicUrl, setName } from '../actions';
-import { userIcons } from '../styles/icons.json';
-import { setProfilePic } from '../lib/storage';
-import { updateUser, getUserOnce, registerUser } from '../lib/users';
-import { Button, IconTextInput, ProfilePicInput } from './Input';
-import ScreenContainer from './ScreenContainer';
+import { setUsername, setProfilePicUrl, setName } from '../../actions';
+import { userIcons } from '../../styles/icons.json';
+import { setProfilePic } from '../../lib/storage';
+import { updateUser, getUserOnce, registerUser } from '../../lib/users';
+import { Button, IconTextInput, ProfilePicInput } from '../Input';
+import ScreenContainer from '../ScreenContainer';
 
 class Register extends Component {
   constructor(props) {

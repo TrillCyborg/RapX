@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { LoginManager } from 'react-native-fbsdk';
-import { Button } from './Input';
-import { signIn } from '../lib/auth';
+import { Button } from '../Input';
+import { signIn } from '../../lib/auth';
 
 class FacebookLoginButton extends Component {
   constructor() {
