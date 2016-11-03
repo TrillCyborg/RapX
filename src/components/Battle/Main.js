@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Text, View, TextInput, ListView } from 'react-native';
 import { RTCView, getUserMedia } from 'react-native-webrtc';
-import { getSocket, joinRoom, exchange, leave } from '../lib/webRTC';
+import { getSocket, joinRoom, exchange, leave } from '../../lib/webRTC';
 import {
   setLocalStream,
   setStatus,
@@ -10,9 +10,9 @@ import {
   setRoomId,
   addTextRoomData,
   setTextRoomValue,
-} from '../actions';
-import ScreenContainer from './ScreenContainer';
-import { Button } from './Input';
+} from '../../actions';
+import ScreenContainer from '../ScreenContainer';
+import { Button } from '../Input';
 
 let socket;
 

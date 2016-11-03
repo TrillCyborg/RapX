@@ -10,7 +10,7 @@ const IconTextInput = ({ onChangeText, value, iconName, placeholder }) => {
         name={iconName}
         size={30}
         style={iconStyle}
-        color="#000"
+        color="#aaa"
       />
       <TextInput
         style={inputStyle}
@@ -37,8 +37,8 @@ const styles = {
     marginLeft: 5,
     marginRight: 5,
     // height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
+    borderColor: '#ddd',
+    borderBottomWidth: 1,
     borderRadius: 5,
     justifyContent: 'flex-start',
     // alignItems: 'flex-start',

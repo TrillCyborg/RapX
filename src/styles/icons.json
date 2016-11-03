@@ -14,4 +14,9 @@
     "usernameIcon": "ios-at-outline",
     "bioIcon": "ios-paper-outline",
   },
+  "trackIcons": {
+    "fire": "ios-flame-outline",
+    "comment": "ios-chatboxes-outline",
+    "more": "ios-more",
+  }
 }
