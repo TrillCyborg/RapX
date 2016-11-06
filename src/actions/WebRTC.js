@@ -5,9 +5,8 @@ const setPcPeer = (socketId, pc) => ({ type: webRTC.setPcPeer, value: { socketId
 const setStatus = status => ({ type: webRTC.setStatus, value: status });
 const setRoomId = id => ({ type: webRTC.setRoomId, value: id });
 const setRemoteList = list => ({ type: webRTC.setRemoteList, value: list });
-const setTextRoomConnected = bool => ({ type: webRTC.setTextRoomConnected, value: bool });
-const addTextRoomData = data => ({ type: webRTC.addTextRoomData, value: data });
-const setTextRoomValue = data => ({ type: webRTC.setTextRoomValue, value: data });
+const setBattleRoomConnected = bool => ({ type: webRTC.setBattleRoomConnected, value: bool });
+const incrementMicChange = () => ({ type: webRTC.incrementMicChange });
 
 export {
   setLocalStream,
@@ -15,7 +14,6 @@ export {
   setStatus,
   setRoomId,
   setRemoteList,
-  setTextRoomConnected,
-  addTextRoomData,
-  setTextRoomValue,
+  setBattleRoomConnected,
+  incrementMicChange,
 };

@@ -33,9 +33,8 @@ const webRTC = {
   setStatus: 'SET_STATUS',
   setRoomId: 'SET_ROOM_ID',
   setRemoteList: 'SET_REMOTE_LIST',
-  setTextRoomConnected: 'SET_TEXT_ROOM_CONNECTED',
-  addTextRoomData: 'ADD_TEXT_ROOM_DATA',
-  setTextRoomValue: 'SET_TEXT_ROOM_VALUE',
+  setBattleRoomConnected: 'SET_BATTLE_ROOM_CONNECTED',
+  incrementMicChange: 'INCREMENT_MIC_CHANGE',
 };
 
 export {

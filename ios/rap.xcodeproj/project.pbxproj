@@ -995,7 +995,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.rapx;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.rap;
 				PRODUCT_NAME = rap;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1033,7 +1033,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.rapx;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.rap;
 				PRODUCT_NAME = rap;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

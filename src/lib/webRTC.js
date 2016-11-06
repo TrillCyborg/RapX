@@ -9,9 +9,8 @@ import {
   setPcPeer,
   setBattleConnectionInfo,
   setRemoteList,
-  setTextRoomConnected,
-  addTextRoomData,
-  setTextRoomValue,
+  setBattleRoomConnected,
+  incrementMicChange,
 } from '../actions';
 
 const configuration = { iceServers: [{ url: 'stun:stun.l.google.com:19302' }] };
@@ -25,9 +24,9 @@ function getSocket() {
 }
 
 // Join a room with roomID
-function joinRoom(socket, roomId) {
-  socket.emit('join', roomId, (socketIds) => {
-    console.log('join', socketIds);
+function joinBattle(socket, roomId) {
+  socket.emit('join battle', roomId, (socketIds) => {
+    console.log('join battle', socketIds);
     socketIds.forEach((id) => {
       createPC(socket, id, true);
     });
@@ -62,32 +61,35 @@ function createPC(socket, socketId, isOffer) {
   }
   // Create data channel for peers to exchange data
   function createDataChannel() {
-    if (pc.textDataChannel) {
+    if (pc.battleDataChannel) {
       return;
     }
-    // Create a data channel called text
-    const dataChannel = pc.createDataChannel('text');
+
+    // Create a data channel called battle
+    const dataChannel = pc.createDataChannel('battle');
 
     dataChannel.onerror = (error) => {
-      console.log('dataChannel.onerror', error);
+      console.log('battleDataChannel.onerror', error);
     };
 
     dataChannel.onmessage = (event) => {
-      console.log('dataChannel.onmessage', event.data);
-      Store.dispatch(addTextRoomData({ user: socketId, message: event.data }));
-      Store.dispatch(setTextRoomValue(''));
+      console.log('battleDataChannel.onmessage', event.data);
+      if (event.data === 'mic_change') {
+        Store.dispatch(incrementMicChange());
+      }
     };
 
     dataChannel.onopen = () => {
-      console.log('dataChannel.onopen');
-      Store.dispatch(setTextRoomConnected(true));
+      console.log('battleDataChannel.onopen');
+      Store.dispatch(setBattleRoomConnected(true));
     };
 
     dataChannel.onclose = () => {
-      console.log('dataChannel.onclose');
+      console.log('battleDataChannel.onclose');
+      Store.dispatch(setBattleRoomConnected(false));
     };
 
-    pc.textDataChannel = dataChannel;
+    pc.battleDataChannel = dataChannel;
   }
 
   const pc = new RTCPeerConnection(configuration);
@@ -116,7 +118,6 @@ function createPC(socket, socketId, isOffer) {
       setTimeout(() => {
         getStats();
       }, 1000);
-      createDataChannel();
     }
   };
 
@@ -133,6 +134,8 @@ function createPC(socket, socketId, isOffer) {
     const remoteList = Store.getState().webRTC.remoteList;
     remoteList[socketId] = event.stream.toURL();
     Store.dispatch(setRemoteList(remoteList));
+
+    createDataChannel();
   };
 
   // Handle media stream being removed from this current connection
@@ -196,7 +199,7 @@ function leave(socketId) {
 
 export {
   getSocket,
-  joinRoom,
+  joinBattle,
   createPC,
   exchange,
   leave,

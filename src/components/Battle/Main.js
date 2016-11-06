@@ -2,14 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Text, View, TextInput, ListView } from 'react-native';
 import { RTCView, getUserMedia } from 'react-native-webrtc';
-import { getSocket, joinRoom, exchange, leave } from '../../lib/webRTC';
+import { getSocket, joinBattle, exchange, leave } from '../../lib/webRTC';
 import {
   setLocalStream,
   setStatus,
   setBattleConnectionInfo,
   setRoomId,
-  addTextRoomData,
-  setTextRoomValue,
+  incrementMicChange,
 } from '../../actions';
 import ScreenContainer from '../ScreenContainer';
 import { Button } from '../Input';
@@ -32,30 +31,26 @@ class Battle extends Component {
       selfViewSrc: null,
     };
     this.getLocalStream = this.getLocalStream.bind(this);
-    this.onPressEnterRoom = this.onPressEnterRoom.bind(this);
-    this.textRoomPress = this.textRoomPress.bind(this);
-    this.renderTextRoom = this.renderTextRoom.bind(this);
+    this.onPressEnterBattle = this.onPressEnterBattle.bind(this);
+    this.renderBattleRoom = this.renderBattleRoom.bind(this);
+    this.sendMicChange = this.sendMicChange.bind(this);
   }
 
   componentWillMount() {
     socket = getSocket();
+    socket.on('connect', (/* data */) => {
+      this.getLocalStream();
+    });
+    socket.on('exchange', data => exchange(socket, data));
+    socket.on('leave', leave);
     this.props.setBattleConnectionInfo('Initializing');
   }
 
-  componentDidMount() {
-    socket.on('exchange', data => exchange(socket, data));
-    socket.on('leave', leave);
-    socket.on('connect', (/* data */) => {
-      console.log('connect');
-      this.getLocalStream();
-    });
-  }
-
-  onPressEnterRoom(/* event */) {
+  onPressEnterBattle(/* event */) {
     this.refs.roomID.blur();
     this.props.setStatus(1);
     this.props.setBattleConnectionInfo('Connecting');
-    joinRoom(socket, this.props.webRTC.roomId);
+    joinBattle(socket, this.props.webRTC.roomId);
   }
 
   getLocalStream() {
@@ -70,32 +65,20 @@ class Battle extends Component {
     }, error => console.log('getUserMedia Error:', error));
   }
 
-  textRoomPress() {
-    if (!this.props.webRTC.textRoomValue) {
-      return;
-    }
-    this.props.addTextRoomData({ user: 'Me', message: this.props.webRTC.textRoomValue });
+  sendMicChange() {
     for (const key in this.props.webRTC.pcPeers) {
       const pc = this.props.webRTC.pcPeers[key];
-      pc.textDataChannel.send(this.props.webRTC.textRoomValue);
+      pc.battleDataChannel.send('mic_change');
     }
-    this.props.setTextRoomValue('');
+    this.props.incrementMicChange();
   }
 
-  renderTextRoom() {
+  renderBattleRoom() {
     return (
-      <View style={styles.listViewContainer}>
-        <ListView
-          dataSource={this.ds.cloneWithRows(this.props.webRTC.textRoomData)}
-          renderRow={rowData => <Text>{`${rowData.user}: ${rowData.message}`}</Text>}
-        />
-        <TextInput
-          style={{ width: 200, height: 30, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={this.props.setTextRoomValue}
-          value={this.props.webRTC.textRoomValue}
-        />
-        <Button onPress={this.textRoomPress}>
-          Send
+      <View>
+        <Text>{this.props.webRTC.micChange}</Text>
+        <Button onPress={this.sendMicChange}>
+          Send Mic Change
         </Button>
       </View>
     );
@@ -108,7 +91,8 @@ class Battle extends Component {
           <Text style={styles.welcome}>
             {this.props.battleConnectionInfo}
           </Text>
-          {this.props.webRTC.textRoomConnected && this.renderTextRoom()}
+          <Text>Battle Room Connected: {this.props.webRTC.battleRoomConnected.toString()}</Text>
+          {this.props.webRTC.battleRoomConnected && this.renderBattleRoom()}
           { this.props.webRTC.status === 2 ?
             (<View>
               <TextInput
@@ -118,7 +102,7 @@ class Battle extends Component {
                 onChangeText={this.props.setRoomId}
                 value={this.props.webRTC.roomId}
               />
-              <Button onPress={this.onPressEnterRoom}>
+            <Button onPress={this.onPressEnterBattle}>
                 Enter room
               </Button>
             </View>) : null
@@ -143,16 +127,15 @@ Battle.propTypes = {
   setStatus: PropTypes.func.isRequired,
   setBattleConnectionInfo: PropTypes.func.isRequired,
   setRoomId: PropTypes.func.isRequired,
-  addTextRoomData: PropTypes.func.isRequired,
-  setTextRoomValue: PropTypes.func.isRequired,
+  incrementMicChange: PropTypes.func.isRequired,
   webRTC: PropTypes.shape({
     pcPeers: PropTypes.object.isRequired,
     status: PropTypes.number.isRequired,
     roomId: PropTypes.string.isRequried,
     remoteList: PropTypes.object.isRequired,
-    textRoomConnected: PropTypes.bool.isRequired,
-    textRoomData: PropTypes.array.isRequired,
-    textRoomValue: PropTypes.string.isRequired,
+    battleRoomConnected: PropTypes.bool.isRequired,
+    battleRoomData: PropTypes.array.isRequired,
+    micChange: PropTypes.number.isRequired,
   }),
   battleConnectionInfo: PropTypes.string.isRequired,
 };
@@ -186,6 +169,5 @@ export default connect(mapStateToProps, {
   setStatus,
   setBattleConnectionInfo,
   setRoomId,
-  addTextRoomData,
-  setTextRoomValue,
+  incrementMicChange,
 })(Battle);
