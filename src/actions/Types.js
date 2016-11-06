@@ -15,6 +15,7 @@ const user = {
 const app = {
   toggleLoggedIn: 'TOGGLE_LOGGED_IN',
   setRegistered: 'SET_REGISTERED',
+  setBattleConnectionInfo: 'SET_BATTLE_CONNECTION_INFO',
 };
 
 const temp = {
@@ -26,9 +27,20 @@ const temp = {
   setTempProfilePicUrl: 'SET_TEMP_PROFILE_PIC_URL',
 };
 
+const webRTC = {
+  setLocalStream: 'SET_LOCAL_STREAM',
+  setPcPeer: 'SET_PC_PEER',
+  setStatus: 'SET_STATUS',
+  setRoomId: 'SET_ROOM_ID',
+  setRemoteList: 'SET_REMOTE_LIST',
+  setBattleRoomConnected: 'SET_BATTLE_ROOM_CONNECTED',
+  incrementMicChange: 'INCREMENT_MIC_CHANGE',
+};
+
 export {
   example,
   user,
   app,
   temp,
+  webRTC,
 };
