@@ -134,7 +134,6 @@ Battle.propTypes = {
     roomId: PropTypes.string.isRequried,
     remoteList: PropTypes.object.isRequired,
     battleRoomConnected: PropTypes.bool.isRequired,
-    battleRoomData: PropTypes.array.isRequired,
     micChange: PropTypes.number.isRequired,
   }),
   battleConnectionInfo: PropTypes.string.isRequired,
