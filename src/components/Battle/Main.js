@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Text, View, TextInput, ListView } from 'react-native';
 import { RTCView, getUserMedia } from 'react-native-webrtc';
+import InCallManager from 'react-native-incall-manager';
 import { getSocket, joinBattle, exchange, leave } from '../../lib/webRTC';
 import {
   setLocalStream,
@@ -27,9 +28,6 @@ class Battle extends Component {
   constructor() {
     super();
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => true });
-    this.state = {
-      selfViewSrc: null,
-    };
     this.getLocalStream = this.getLocalStream.bind(this);
     this.onPressEnterBattle = this.onPressEnterBattle.bind(this);
     this.renderBattleRoom = this.renderBattleRoom.bind(this);
@@ -59,9 +57,12 @@ class Battle extends Component {
       video: false,
     }, (stream) => {
       this.props.setLocalStream(stream);
-      this.setState({ selfViewSrc: stream.toURL() });
       this.props.setStatus(2);
       this.props.setBattleConnectionInfo('Please enter or create room ID');
+      InCallManager.start({ media: 'audio' });
+      InCallManager.setForceSpeakerphoneOn(true);
+      InCallManager.setSpeakerphoneOn(true);
+      InCallManager.setKeepScreenOn(true); // TODO: get this working
     }, error => console.log('getUserMedia Error:', error));
   }
 
@@ -107,7 +108,6 @@ class Battle extends Component {
               </Button>
             </View>) : null
           }
-          <RTCView streamURL={this.state.selfViewSrc} style={styles.selfView} />
           {
             mapHash(this.props.webRTC.remoteList, (remote, index) => (
               <RTCView

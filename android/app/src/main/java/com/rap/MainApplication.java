@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.zxcpoiu.incallmanager.InCallManagerPackage;
 import com.audioStreaming.ReactNativeAudioStreamingPackage;
 import com.oney.WebRTCModule.WebRTCModulePackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
@@ -29,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new InCallManagerPackage(),
             new ReactNativeAudioStreamingPackage(),
             new WebRTCModulePackage(),
             new RNFetchBlobPackage(),

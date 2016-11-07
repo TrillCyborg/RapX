@@ -43,6 +43,8 @@
 		1A44BDBC1DBD757F0086F29B /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A44BDB21DBD757F0086F29B /* libsqlite3.tbd */; };
 		1A44BDBD1DBD757F0086F29B /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A44BDB31DBD757F0086F29B /* libstdc++.tbd */; };
 		1A44BDBE1DBD757F0086F29B /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A44BDB41DBD757F0086F29B /* VideoToolbox.framework */; };
+		1A5C307B1DD087130079855E /* RNInCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5C30791DD087130079855E /* RNInCallManager.swift */; };
+		1A5C307C1DD087130079855E /* RNInCallManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5C307A1DD087130079855E /* RNInCallManagerBridge.m */; };
 		1ADB67C51D9ED8AE00D5E662 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ADB67C21D9ED8AE00D5E662 /* FBSDKCoreKit.framework */; };
 		1ADB67C61D9ED8AE00D5E662 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ADB67C31D9ED8AE00D5E662 /* FBSDKLoginKit.framework */; };
 		1ADB67C71D9ED8AE00D5E662 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ADB67C41D9ED8AE00D5E662 /* FBSDKShareKit.framework */; };
@@ -240,6 +242,9 @@
 		1A44BDB21DBD757F0086F29B /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		1A44BDB31DBD757F0086F29B /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		1A44BDB41DBD757F0086F29B /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		1A5C30781DD087130079855E /* RNInCallManager-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNInCallManager-Bridging-Header.h"; sourceTree = "<group>"; };
+		1A5C30791DD087130079855E /* RNInCallManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNInCallManager.swift; sourceTree = "<group>"; };
+		1A5C307A1DD087130079855E /* RNInCallManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNInCallManagerBridge.m; sourceTree = "<group>"; };
 		1AA573EB1DBCD92B00D10146 /* rap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = rap.entitlements; path = rap/rap.entitlements; sourceTree = "<group>"; };
 		1ADB67C21D9ED8AE00D5E662 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		1ADB67C31D9ED8AE00D5E662 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
@@ -393,6 +398,7 @@
 		13B07FAE1A68108700A75B9A /* rap */ = {
 			isa = PBXGroup;
 			children = (
+				1A5C30771DD087130079855E /* RNInCallManager */,
 				1AA573EB1DBCD92B00D10146 /* rap.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -435,6 +441,17 @@
 				1A44BDA11DBD73CD0086F29B /* libRCTWebRTC.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1A5C30771DD087130079855E /* RNInCallManager */ = {
+			isa = PBXGroup;
+			children = (
+				1A5C30781DD087130079855E /* RNInCallManager-Bridging-Header.h */,
+				1A5C30791DD087130079855E /* RNInCallManager.swift */,
+				1A5C307A1DD087130079855E /* RNInCallManagerBridge.m */,
+			);
+			name = RNInCallManager;
+			path = "../node_modules/react-native-incall-manager/ios/RNInCallManager";
 			sourceTree = "<group>";
 		};
 		1ADB67B21D9ED20400D5E662 /* Products */ = {
@@ -621,10 +638,12 @@
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = Q893BCZB4T;
+						LastSwiftMigration = 0800;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = Q893BCZB4T;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 1;
@@ -888,7 +907,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				1A5C307C1DD087130079855E /* RNInCallManagerBridge.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				1A5C307B1DD087130079855E /* RNInCallManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -918,6 +939,7 @@
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = Q893BCZB4T;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -936,6 +958,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rap.app/rap";
 			};
 			name = Debug;
@@ -943,6 +966,7 @@
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = Q893BCZB4T;
@@ -958,6 +982,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rap.app/rap";
 			};
 			name = Release;
@@ -997,6 +1022,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.rap;
 				PRODUCT_NAME = rap;
+				SWIFT_VERSION = 2.3;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1035,6 +1061,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.rap;
 				PRODUCT_NAME = rap;
+				SWIFT_VERSION = 2.3;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1090,6 +1117,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "../node_modules/react-native-incall-manager/ios/RNInCallManager/RNInCallManager-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1137,6 +1165,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "../node_modules/react-native-incall-manager/ios/RNInCallManager/RNInCallManager-Bridging-Header.h";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
