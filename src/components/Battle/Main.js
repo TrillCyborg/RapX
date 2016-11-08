@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Text, View, TextInput, ListView } from 'react-native';
 import { RTCView, getUserMedia } from 'react-native-webrtc';
 import InCallManager from 'react-native-incall-manager';
+import Sound from 'react-native-sound';
 import { getSocket, joinBattle, exchange, leave } from '../../lib/webRTC';
 import {
   setLocalStream,
@@ -27,11 +28,16 @@ function mapHash(hash, func) {
 class Battle extends Component {
   constructor() {
     super();
+    this.state = {
+      beat: null,
+    };
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => true });
     this.getLocalStream = this.getLocalStream.bind(this);
     this.onPressEnterBattle = this.onPressEnterBattle.bind(this);
     this.renderBattleRoom = this.renderBattleRoom.bind(this);
     this.sendMicChange = this.sendMicChange.bind(this);
+    this.playBeat = this.playBeat.bind(this);
+    this.pauseBeat = this.pauseBeat.bind(this);
   }
 
   componentWillMount() {
@@ -42,6 +48,16 @@ class Battle extends Component {
     socket.on('exchange', data => exchange(socket, data));
     socket.on('leave', leave);
     this.props.setBattleConnectionInfo('Initializing');
+
+    const beat = new Sound('sample_beat.mp3', Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('LOAD BEAT ERROR', error);
+      } else { // loaded successfully
+        console.log(`BEAT DURRATION in seconds: ${beat.getDuration()}
+          BEAT CHANNELS: ${beat.getNumberOfChannels()}`);
+        this.setState({ beat });
+      }
+    });
   }
 
   onPressEnterBattle(/* event */) {
@@ -75,11 +91,31 @@ class Battle extends Component {
     this.props.webRTC.localStream.getAudioTracks()[0].enabled = false;
   }
 
+  playBeat() {
+    this.state.beat.play((success) => {
+      if (success) {
+        console.log('PLAYING BEAT');
+      } else {
+        console.log('ERROR PLAYING BEAT');
+      }
+    });
+  }
+
+  pauseBeat() {
+    this.state.beat.pause();
+  }
+
   renderBattleRoom() {
     return (
       <View>
         <Button onPress={this.sendMicChange} disabled={this.props.disableChangeMicButton}>
           Send Mic Change
+        </Button>
+        <Button onPress={this.playBeat}>
+          Play Beat
+        </Button>
+        <Button onPress={this.pauseBeat}>
+          Pause Beat
         </Button>
       </View>
     );

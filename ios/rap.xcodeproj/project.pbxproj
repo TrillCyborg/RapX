@@ -45,6 +45,8 @@
 		1A44BDBE1DBD757F0086F29B /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A44BDB41DBD757F0086F29B /* VideoToolbox.framework */; };
 		1A5C307B1DD087130079855E /* RNInCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5C30791DD087130079855E /* RNInCallManager.swift */; };
 		1A5C307C1DD087130079855E /* RNInCallManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5C307A1DD087130079855E /* RNInCallManagerBridge.m */; };
+		1A5C30DD1DD24F680079855E /* sample_beat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1A5C30DC1DD24F670079855E /* sample_beat.mp3 */; };
+		1A5C30F91DD250A00079855E /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5C30F81DD250800079855E /* libRNSound.a */; };
 		1ADB67C51D9ED8AE00D5E662 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ADB67C21D9ED8AE00D5E662 /* FBSDKCoreKit.framework */; };
 		1ADB67C61D9ED8AE00D5E662 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ADB67C31D9ED8AE00D5E662 /* FBSDKLoginKit.framework */; };
 		1ADB67C71D9ED8AE00D5E662 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ADB67C41D9ED8AE00D5E662 /* FBSDKShareKit.framework */; };
@@ -155,6 +157,13 @@
 			remoteGlobalIDString = 35A2221F1CB493700015FD5C;
 			remoteInfo = RCTWebRTC;
 		};
+		1A5C30F71DD250800079855E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A5C30F31DD2507F0079855E /* RNSound.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19825A1E1BD4A89800EE0337;
+			remoteInfo = RNSound;
+		};
 		1ADB67B61D9ED20700D5E662 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 458FD538E1BD4761A22AF506 /* RCTFBSDK.xcodeproj */;
@@ -245,6 +254,8 @@
 		1A5C30781DD087130079855E /* RNInCallManager-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNInCallManager-Bridging-Header.h"; sourceTree = "<group>"; };
 		1A5C30791DD087130079855E /* RNInCallManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNInCallManager.swift; sourceTree = "<group>"; };
 		1A5C307A1DD087130079855E /* RNInCallManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNInCallManagerBridge.m; sourceTree = "<group>"; };
+		1A5C30DC1DD24F670079855E /* sample_beat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sample_beat.mp3; sourceTree = "<group>"; };
+		1A5C30F31DD2507F0079855E /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		1AA573EB1DBCD92B00D10146 /* rap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = rap.entitlements; path = rap/rap.entitlements; sourceTree = "<group>"; };
 		1ADB67C21D9ED8AE00D5E662 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		1ADB67C31D9ED8AE00D5E662 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
@@ -282,6 +293,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A5C30F91DD250A00079855E /* libRNSound.a in Frameworks */,
 				1A0DAFCB1DBFB3C5008D1261 /* libRNFetchBlob.a in Frameworks */,
 				1A44BDB51DBD757F0086F29B /* AudioToolbox.framework in Frameworks */,
 				1A44BDB61DBD757F0086F29B /* AVFoundation.framework in Frameworks */,
@@ -454,6 +466,14 @@
 			path = "../node_modules/react-native-incall-manager/ios/RNInCallManager";
 			sourceTree = "<group>";
 		};
+		1A5C30F41DD2507F0079855E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1A5C30F81DD250800079855E /* libRNSound.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		1ADB67B21D9ED20400D5E662 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -512,6 +532,7 @@
 		3F3D34075A3D4FCD94B926CF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1A5C30DC1DD24F670079855E /* sample_beat.mp3 */,
 				E1D5D59EFA8943E1A3F45EB7 /* Entypo.ttf */,
 				738ECB6CA23342039F17B4C1 /* EvilIcons.ttf */,
 				82BAA807598745A78DA024AB /* FontAwesome.ttf */,
@@ -535,6 +556,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				1A5C30F31DD2507F0079855E /* RNSound.xcodeproj */,
 				1A0DAFC51DBFB37F008D1261 /* RNFetchBlob.xcodeproj */,
 				1A44BD921DBD73CD0086F29B /* RCTWebRTC.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -721,6 +743,10 @@
 					ProjectRef = 1A0DAFC51DBFB37F008D1261 /* RNFetchBlob.xcodeproj */;
 				},
 				{
+					ProductGroup = 1A5C30F41DD2507F0079855E /* Products */;
+					ProjectRef = 1A5C30F31DD2507F0079855E /* RNSound.xcodeproj */;
+				},
+				{
 					ProductGroup = 1ADB67D31D9FFE9300D5E662 /* Products */;
 					ProjectRef = 0F3C2E1567DE4F63B337E06A /* RNVectorIcons.xcodeproj */;
 				},
@@ -811,6 +837,13 @@
 			remoteRef = 1A44BDA01DBD73CD0086F29B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		1A5C30F81DD250800079855E /* libRNSound.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSound.a;
+			remoteRef = 1A5C30F71DD250800079855E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		1ADB67B71D9ED20700D5E662 /* libRCTFBSDK.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -864,6 +897,7 @@
 				1ADB67FD1DA0001400D5E662 /* Entypo.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				7765903260F2448AA9785363 /* Entypo.ttf in Resources */,
+				1A5C30DD1DD24F680079855E /* sample_beat.mp3 in Resources */,
 				5CD765B61C1840669973D21E /* EvilIcons.ttf in Resources */,
 				9ABF2DACFE71435EA15866DB /* FontAwesome.ttf in Resources */,
 				9ECC6C20456E47B8B217AF23 /* Foundation.ttf in Resources */,
