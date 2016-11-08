@@ -9,7 +9,6 @@ const initWebRTCState = {
   roomId: '',
   remoteList: {},
   battleRoomConnected: false,
-  micChange: 0,
 };
 
 export default function WebRTC(state = initWebRTCState, action) {
@@ -51,11 +50,6 @@ export default function WebRTC(state = initWebRTCState, action) {
       return {
         ...state,
         battleRoomValue: action.value,
-      };
-    case webRTCTypes.incrementMicChange:
-      return {
-        ...state,
-        micChange: state.micChange + 1,
       };
     default:
       return state;

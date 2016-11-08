@@ -6,7 +6,6 @@ const setStatus = status => ({ type: webRTC.setStatus, value: status });
 const setRoomId = id => ({ type: webRTC.setRoomId, value: id });
 const setRemoteList = list => ({ type: webRTC.setRemoteList, value: list });
 const setBattleRoomConnected = bool => ({ type: webRTC.setBattleRoomConnected, value: bool });
-const incrementMicChange = () => ({ type: webRTC.incrementMicChange });
 
 export {
   setLocalStream,
@@ -15,5 +14,4 @@ export {
   setRoomId,
   setRemoteList,
   setBattleRoomConnected,
-  incrementMicChange,
 };

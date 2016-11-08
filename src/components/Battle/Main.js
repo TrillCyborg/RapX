@@ -9,7 +9,7 @@ import {
   setStatus,
   setBattleConnectionInfo,
   setRoomId,
-  incrementMicChange,
+  setDisableChangeMicButton,
 } from '../../actions';
 import ScreenContainer from '../ScreenContainer';
 import { Button } from '../Input';
@@ -71,14 +71,14 @@ class Battle extends Component {
       const pc = this.props.webRTC.pcPeers[key];
       pc.battleDataChannel.send('mic_change');
     }
-    this.props.incrementMicChange();
+    this.props.setDisableChangeMicButton(true);
+    this.props.webRTC.localStream.getAudioTracks()[0].enabled = false;
   }
 
   renderBattleRoom() {
     return (
       <View>
-        <Text>{this.props.webRTC.micChange}</Text>
-        <Button onPress={this.sendMicChange}>
+        <Button onPress={this.sendMicChange} disabled={this.props.disableChangeMicButton}>
           Send Mic Change
         </Button>
       </View>
@@ -103,7 +103,7 @@ class Battle extends Component {
                 onChangeText={this.props.setRoomId}
                 value={this.props.webRTC.roomId}
               />
-            <Button onPress={this.onPressEnterBattle}>
+              <Button onPress={this.onPressEnterBattle}>
                 Enter room
               </Button>
             </View>) : null
@@ -127,16 +127,17 @@ Battle.propTypes = {
   setStatus: PropTypes.func.isRequired,
   setBattleConnectionInfo: PropTypes.func.isRequired,
   setRoomId: PropTypes.func.isRequired,
-  incrementMicChange: PropTypes.func.isRequired,
+  setDisableChangeMicButton: PropTypes.func.isRequired,
   webRTC: PropTypes.shape({
     pcPeers: PropTypes.object.isRequired,
     status: PropTypes.number.isRequired,
     roomId: PropTypes.string.isRequried,
     remoteList: PropTypes.object.isRequired,
     battleRoomConnected: PropTypes.bool.isRequired,
-    micChange: PropTypes.number.isRequired,
+    localStream: PropTypes.object,
   }),
   battleConnectionInfo: PropTypes.string.isRequired,
+  disableChangeMicButton: PropTypes.bool,
 };
 
 const styles = {
@@ -161,6 +162,7 @@ const styles = {
 const mapStateToProps = state => ({
   webRTC: state.webRTC,
   battleConnectionInfo: state.app.battleConnectionInfo,
+  disableChangeMicButton: state.app.disableChangeMicButton,
 });
 
 export default connect(mapStateToProps, {
@@ -168,5 +170,5 @@ export default connect(mapStateToProps, {
   setStatus,
   setBattleConnectionInfo,
   setRoomId,
-  incrementMicChange,
+  setDisableChangeMicButton,
 })(Battle);

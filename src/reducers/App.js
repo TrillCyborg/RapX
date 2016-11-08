@@ -4,6 +4,7 @@ const initAppState = {
   loggedIn: false,
   registered: null,
   battleConnectionInfo: '',
+  disableChangeMicButton: false,
 };
 
 export default function App(state = initAppState, action) {
@@ -22,6 +23,11 @@ export default function App(state = initAppState, action) {
       return {
         ...state,
         battleConnectionInfo: action.value,
+      };
+    case appTypes.setDisableChangeMicButton:
+      return {
+        ...state,
+        disableChangeMicButton: action.value,
       };
     default:
       return state;

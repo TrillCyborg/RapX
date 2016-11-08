@@ -16,6 +16,7 @@ const app = {
   toggleLoggedIn: 'TOGGLE_LOGGED_IN',
   setRegistered: 'SET_REGISTERED',
   setBattleConnectionInfo: 'SET_BATTLE_CONNECTION_INFO',
+  setDisableChangeMicButton: 'SET_DISABLE_CHANGE_MIC_BUTTON',
 };
 
 const temp = {
@@ -34,7 +35,6 @@ const webRTC = {
   setRoomId: 'SET_ROOM_ID',
   setRemoteList: 'SET_REMOTE_LIST',
   setBattleRoomConnected: 'SET_BATTLE_ROOM_CONNECTED',
-  incrementMicChange: 'INCREMENT_MIC_CHANGE',
 };
 
 export {

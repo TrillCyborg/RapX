@@ -10,7 +10,7 @@ import {
   setBattleConnectionInfo,
   setRemoteList,
   setBattleRoomConnected,
-  incrementMicChange,
+  setDisableChangeMicButton,
 } from '../actions';
 
 const configuration = { iceServers: [{ url: 'stun:stun.l.google.com:19302' }] };
@@ -27,6 +27,10 @@ function getSocket() {
 function joinBattle(socket, roomId) {
   socket.emit('join battle', roomId, (socketIds) => {
     console.log('join battle', socketIds);
+    if (socketIds.length) {
+      Store.dispatch(setDisableChangeMicButton(true));
+      Store.getState().webRTC.localStream.getAudioTracks()[0].enabled = false;
+    }
     socketIds.forEach((id) => {
       createPC(socket, id, true);
     });
@@ -75,7 +79,8 @@ function createPC(socket, socketId, isOffer) {
     dataChannel.onmessage = (event) => {
       console.log('battleDataChannel.onmessage', event.data);
       if (event.data === 'mic_change') {
-        Store.dispatch(incrementMicChange());
+        Store.dispatch(setDisableChangeMicButton(false));
+        Store.getState().webRTC.localStream.getAudioTracks()[0].enabled = true;
       }
     };
 
