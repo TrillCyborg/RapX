@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Provider } from 'react-redux';
 import firebase from 'firebase';
 import Store from './store/Store';
-import { initLogin } from './lib/auth';
+import { initLogin } from './actions';
 import Routes from './Routes';
 
 class Root extends Component {
@@ -22,9 +22,9 @@ class Root extends Component {
       storageBucket: 'rapx-4dfa8.appspot.com',
       messagingSenderId: '683961390118',
     });
-    initLogin(() => {
+    Store.dispatch(initLogin(() => {
       this.setState({ finishLogin: true });
-    });
+    }));
   }
 
   render() {

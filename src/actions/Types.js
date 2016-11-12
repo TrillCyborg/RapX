@@ -1,9 +1,13 @@
-const example = {
-  EXAMPLE1: 'EXAMPLE1',
-  EXAMPLE2: 'EXAMPLE2',
+const auth = {
+  login: 'LOGIN',
+  loginSuccess: 'LOGIN_SUCCESS',
+  loginFail: 'LOGIN_FAIL',
+  logout: 'LOGOUT',
+  logoutSuccess: 'LOGOUT_SUCCESS',
 };
 
 const user = {
+  login: 'LOGIN',
   setFbAccessToken: 'SET_FB_ACCESS_TOKEN',
   setUsername: 'SET_USERNAME',
   setProfilePicUrl: 'SET_PROFILE_PIC_URL',
@@ -13,8 +17,6 @@ const user = {
 };
 
 const app = {
-  toggleLoggedIn: 'TOGGLE_LOGGED_IN',
-  setRegistered: 'SET_REGISTERED',
   setBattleConnectionInfo: 'SET_BATTLE_CONNECTION_INFO',
   setDisableChangeMicButton: 'SET_DISABLE_CHANGE_MIC_BUTTON',
 };
@@ -38,7 +40,7 @@ const webRTC = {
 };
 
 export {
-  example,
+  auth,
   user,
   app,
   temp,

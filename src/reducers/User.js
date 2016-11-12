@@ -1,4 +1,7 @@
-import { user as userTypes } from '../actions/Types';
+import {
+  user as userTypes,
+  auth as authTypes,
+} from '../actions/Types';
 
 const initUserState = {
   uid: '',
@@ -11,6 +14,13 @@ const initUserState = {
 
 export default function User(state = initUserState, action) {
   switch (action.type) {
+    case authTypes.loginSuccess:
+      return {
+        ...state,
+        uid: action.value.uid,
+        picUrl: action.value.picUrl,
+        fbAccessToken: action.value.fbAccessToken,
+      };
     case userTypes.setUid:
       return {
         ...state,

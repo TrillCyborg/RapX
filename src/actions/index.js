@@ -1,4 +1,4 @@
-export * from './Example';
+export * from './Auth';
 export * from './User';
 export * from './App';
 export * from './Temp';

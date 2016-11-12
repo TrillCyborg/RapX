@@ -1,7 +1,12 @@
-import { app as appTypes } from '../actions/Types';
+import {
+  app as appTypes,
+  auth as authTypes,
+} from '../actions/Types';
 
 const initAppState = {
+  loginLoading: false,
   loggedIn: false,
+  loginError: '',
   registered: null,
   battleConnectionInfo: '',
   disableChangeMicButton: false,
@@ -9,15 +14,29 @@ const initAppState = {
 
 export default function App(state = initAppState, action) {
   switch (action.type) {
-    case appTypes.toggleLoggedIn:
+    case authTypes.login:
       return {
         ...state,
-        loggedIn: !state.loggedIn,
+        loginError: '',
+        loginLoading: true,
       };
-    case appTypes.setRegistered:
+    case authTypes.loginSuccess:
       return {
         ...state,
-        registered: action.value,
+        registered: action.value.isRegistered,
+        loggedIn: true,
+        loginLoading: false,
+      };
+    case authTypes.loginFail:
+      return {
+        ...state,
+        loginFail: 'Authentication Error',
+        loginLoading: false,
+      };
+    case authTypes.logoutSuccess:
+      return {
+        ...state,
+        loggedIn: false,
       };
     case appTypes.setBattleConnectionInfo:
       return {

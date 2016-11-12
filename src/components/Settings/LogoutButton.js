@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { LoginManager } from 'react-native-fbsdk';
 import { Button } from '../Input';
-import { signOut } from '../../lib/auth';
-import { toggleLoggedIn } from '../../actions';
+import { logout } from '../../actions';
 
 class LogoutButton extends Component {
   constructor(props) {
@@ -18,9 +17,7 @@ class LogoutButton extends Component {
     });
 
     promise.then(() => {
-      this.props.toggleLoggedIn();
-      // TODO reset all state
-      signOut().then(() => Actions.welcome({ type: 'reset' }));
+      this.props.logout(() => Actions.welcome({ type: 'reset' }));
     });
   }
 
@@ -30,7 +27,7 @@ class LogoutButton extends Component {
 }
 
 LogoutButton.propTypes = {
-  toggleLoggedIn: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
-export default connect(null, { toggleLoggedIn })(LogoutButton);
+export default connect(null, { logout })(LogoutButton);

@@ -1,6 +1,4 @@
 import firebase from 'firebase';
-import Store from '../store/Store';
-import { setRegistered } from '../actions';
 
 // "uid1": {
 //   "username": "trillcyborg",
@@ -18,15 +16,14 @@ import { setRegistered } from '../actions';
 //   "updatedAt": 1475442342328,
 // }
 
-const createNewUser = ({ uid, email, fbAccessToken, fbid }) => {
-  return firebase.database().ref(`users/${uid}`).set({
+const createNewUser = ({ uid, email, fbAccessToken, fbid }) => firebase.database().ref(`users/${uid}`)
+  .set({
     email,
     fbAccessToken,
     fbid,
     isRegistered: false,
     createdAt: firebase.database.ServerValue.TIMESTAMP,
   });
-};
 
 // TODO: check map function to make sure only allowed fields are here
 const updateUser = (uid, updates) => {
@@ -37,20 +34,12 @@ const updateUser = (uid, updates) => {
   return firebase.database().ref(`users/${uid}`).update(params);
 };
 
-const isUserRegistered = (uid, callback) => {
-  firebase.database().ref(`users/${uid}/isRegistered`)
-    .once('value')
+const isUserRegistered = uid => new Promise((resolve) => {
+  firebase.database().ref(`users/${uid}/isRegistered`).once('value')
     .then((snapshot) => {
-      if (snapshot.val()) {
-        Store.dispatch(setRegistered(true));
-      } else {
-        Store.dispatch(setRegistered(false));
-      }
-      if (callback) {
-        callback(snapshot.val());
-      }
+      resolve(snapshot.val());
     });
-};
+});
 
 const getUser = (uid, callback) => {
   firebase.database().ref(`users/${uid}`)
