@@ -90,7 +90,7 @@ const login = () => {
               const { uid, photoURL } = firebase.auth().currentUser;
               dispatch(loginSuccess(uid, photoURL, fbAccessToken.accessToken, isRegistered));
               if (isRegistered) {
-                Actions.main({ type: 'reset' });
+                Actions.main();
               } else {
                 Actions.register();
               }
