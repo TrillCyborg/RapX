@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import { Actions } from 'react-native-router-flux';
 import {
   isUserRegistered,
   getUserOnce,
@@ -29,7 +30,7 @@ const loginSuccess = (uid, photoURL, fbAccessToken, isRegistered) => ({
   value: { uid, picUrl: photoURL, fbAccessToken, isRegistered },
 });
 const loginFail = error => ({ type: auth.loginFail, value: error });
-const login = (callback) => {
+const login = () => {
   let fbAccessToken;
   return (dispatch) => {
     dispatch({ type: auth.login });
@@ -88,7 +89,11 @@ const login = (callback) => {
             .then((isRegistered) => {
               const { uid, photoURL } = firebase.auth().currentUser;
               dispatch(loginSuccess(uid, photoURL, fbAccessToken.accessToken, isRegistered));
-              callback();
+              if (isRegistered) {
+                Actions.main({ type: 'reset' });
+              } else {
+                Actions.register();
+              }
             })
             .catch((error) => {
               console.log('LOGIN ERROR', error);
