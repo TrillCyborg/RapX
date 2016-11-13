@@ -1,14 +1,11 @@
 import React, { PropTypes } from 'react';
 import { View } from 'react-native';
 
-const ScreenContainer = ({ children, center }) => {
-  const { containerCenter, container } = styles;
-  return (
-    <View style={center ? containerCenter : container}>
-      {children}
-    </View>
-  );
-};
+const ScreenContainer = ({ children, center }) => (
+  <View style={[styles.container, center ? styles.center : null]}>
+    {children}
+  </View>
+);
 
 ScreenContainer.propTypes = {
   children: PropTypes.oneOfType([
@@ -23,9 +20,7 @@ const styles = {
     flex: 1,
     marginTop: 65,
   },
-  containerCenter: {
-    flex: 1,
-    marginTop: 65,
+  center: {
     justifyContent: 'flex-start', // vertical
     alignItems: 'center', // horizontal
   },
